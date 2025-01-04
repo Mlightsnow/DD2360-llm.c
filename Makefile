@@ -231,7 +231,7 @@ endif
 
 # Precision settings, default to bf16 but ability to override
 PRECISION ?= BF16
-VALID_PRECISIONS := FP32 FP16 BF16
+VALID_PRECISIONS := FP32 FP16 BF16 I8
 ifeq ($(filter $(PRECISION),$(VALID_PRECISIONS)),)
   $(error Invalid precision $(PRECISION), valid precisions are $(VALID_PRECISIONS))
 endif
@@ -239,6 +239,8 @@ ifeq ($(PRECISION), FP32)
   PFLAGS = -DENABLE_FP32
 else ifeq ($(PRECISION), FP16)
   PFLAGS = -DENABLE_FP16
+else ifeq ($(PRECISION), I8)
+  PFLAGS = -DENABLE_I8
 else
   PFLAGS = -DENABLE_BF16
 endif
