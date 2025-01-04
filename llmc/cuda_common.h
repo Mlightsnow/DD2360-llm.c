@@ -75,7 +75,8 @@ inline void cudaFreeCheck(T** ptr, const char *file, int line) {
 enum PrecisionMode {
     PRECISION_FP32,
     PRECISION_FP16,
-    PRECISION_BF16
+    PRECISION_BF16,
+    PRECISION_I8
 };
 
 // Specific configurations based on the enabled precision
@@ -86,6 +87,9 @@ typedef float floatX;
 #elif defined(ENABLE_FP16)
 typedef half floatX;
 #define PRECISION_MODE PRECISION_FP16
+#elif defined(ENABLE_I8)
+typedef int floatX
+#define PRECISION_MODE PRECISION_I8
 #else // Default to bfloat16
 typedef __nv_bfloat16 floatX;
 #define PRECISION_MODE PRECISION_BF16
