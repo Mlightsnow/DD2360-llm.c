@@ -457,13 +457,13 @@ void gpt2_build_from_checkpoint(GPT2 *model, const char* checkpoint_path, bool w
     // the master weights that are instead stored in the state .bin file.
     // In that case, this function mostly loads the model hyperparameters from the header.
 
-    if (PRECISION_MODE == PRECISION_FP16) {
-        // TODO for later perhaps, would require us dynamically converting the
-        // model weights from fp32 to fp16 online, here in this function, or writing
-        // the fp16 weights directly from Python, which we only do for fp32/bf16 atm.
-        fprintf(stderr, "build_from_checkpoint() does not support fp16 right now.\n");
-        exit(EXIT_FAILURE);
-    }
+    // if (PRECISION_MODE == PRECISION_FP16) {
+    //     // TODO for later perhaps, would require us dynamically converting the
+    //     // model weights from fp32 to fp16 online, here in this function, or writing
+    //     // the fp16 weights directly from Python, which we only do for fp32/bf16 atm.
+    //     fprintf(stderr, "build_from_checkpoint() does not support fp16 right now.\n");
+    //     exit(EXIT_FAILURE);
+    // }
 
     // read in model from a checkpoint file
     FILE *model_file = fopenCheck(checkpoint_path, "rb");
@@ -471,9 +471,10 @@ void gpt2_build_from_checkpoint(GPT2 *model, const char* checkpoint_path, bool w
     freadCheck(model_header, sizeof(int), 256, model_file);
     if (model_header[0] != 20240326) { printf("Bad magic model file\n"); exit(EXIT_FAILURE); }
     int version = model_header[1];
-    if (!(version == 3 || version == 5)) {
+    if (!(version == 3 || version == 5 || version == 7)) {
         // 3 = fp32, padded vocab
         // 5 = bf16, padded vocab, layernorms also in bf16
+        // 7 = fp16
         fprintf(stderr, "Bad version in model file\n");
         fprintf(stderr, "---> HINT: try to re-run `python train_gpt2.py`\n");
         exit(EXIT_FAILURE);
@@ -484,6 +485,11 @@ void gpt2_build_from_checkpoint(GPT2 *model, const char* checkpoint_path, bool w
         if (PRECISION_MODE == PRECISION_BF16 && version != 5) {
             fprintf(stderr, "Precision is configured as BF16 but model at %s is not.\n", checkpoint_path);
             fprintf(stderr, "---> HINT: are you sure you're loading a _bf16.bin file?\n");
+            exit(EXIT_FAILURE);
+        }
+        if (PRECISION_MODE == PRECISION_FP16 && version != 7) {
+            fprintf(stderr, "Precision is configured as FP16 but model at %s is not.\n", checkpoint_path);
+            fprintf(stderr, "---> HINT: to turn on FP16 you have to compile like: `make train_gpt2cu PRECISION=FP16`\n");
             exit(EXIT_FAILURE);
         }
         if (PRECISION_MODE == PRECISION_FP32 && version != 3) {
@@ -1869,9 +1875,9 @@ int main(int argc, char *argv[]) {
             bias_corrected_ema_tokens_per_second = ema_tokens_per_second / (1.0f - powf(0.95f, step));
         }
         float mfu = gpt2_estimate_mfu(&model, B * T * grad_accum_steps, time_elapsed_ms / 1000.0f);
-        printf0("step %4d/%d | loss %7.6f (%+.2fz)| norm %6.4f (%+.2fz)| lr %.2e | %.2f ms | %.1f%% bf16 MFU | %.0f tok/s\n",
+        printf0("step %4d/%d | loss %7.6f (%+.2fz)| norm %6.4f (%+.2fz)| lr %.2e | %.2f ms | %.1f%% %s MFU | %.0f tok/s\n",
                 step + 1, train_num_batches, model.mean_loss, zloss, grad_norm, zgrad, step_learning_rate,
-                time_elapsed_ms, 100*mfu, bias_corrected_ema_tokens_per_second);
+                time_elapsed_ms, 100*mfu, precision_str, bias_corrected_ema_tokens_per_second);
         if(log_gpu_every > 0 && (step + 1) % log_gpu_every == 0) {
             GPUUtilInfo gpu_info = get_gpu_utilization_info();
             printf0("                  compute %2.1f%% | memory: %2.1f%% | fan: %2d%% | %4d MHz / %4d MHz | %3d W / %3d W | %d°C / %d°C | %s\n",
