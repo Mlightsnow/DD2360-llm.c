@@ -385,6 +385,11 @@ def write_fp32(tensor, file):
     b = t.numpy().tobytes()
     file.write(b)
 
+def write_fp16(tensor, file):
+    t = tensor.detach().cpu().to(torch.float16)
+    b = t.numpy().tobytes()
+    file.write(b)
+
 def write_bf16(tensor, file):
     t = tensor.detach().cpu().to(torch.bfloat16)
     # numpy doesn't have bf16 datatype so we have to trick it
@@ -394,8 +399,13 @@ def write_bf16(tensor, file):
 
 def write_tensors(model_tensors, L, file, dtype):
     # writes the GPT-2 model's weights to a binary file
-    assert dtype in {"float32", "bfloat16"}
-    write_fun = write_fp32 if dtype == "float32" else write_bf16
+    assert dtype in {"float32", "bfloat16", "float16"}
+    if dtype == "float32":
+        write_fun = write_fp32
+    elif dtype == "float16":
+        write_fun = write_fp16
+    else:
+        write_fun = write_bf16
     write_fun(model_tensors["transformer.wte.weight"], file) # (V, C)
     write_fun(model_tensors["transformer.wpe.weight"], file) # (T, C)
     for i in range(L): # (L, C)
@@ -449,10 +459,11 @@ def pad_vocab(tensor, multiple=128, value=0):
 def write_model(model, filename, dtype):
     # everything we need to instantiate the model
     # 1) header is: version int, GPTConfig ints, padding to 1024 bytes
-    assert dtype in {"float32", "bfloat16"} # float16 todo maybe later
+    assert dtype in {"float32", "bfloat16", "float16"}
     version = {
         "float32": 3, # 3: all tensors are fp32, padded vocab
         "bfloat16": 5, # 5: all tensors are bf16, padded vocab
+        "float16": 7,
     }[dtype]
     header = torch.zeros(256, dtype=torch.int32)
     header[0] = 20240326 # magic
@@ -693,6 +704,7 @@ if __name__ == "__main__":
         model_size_str = model_to_size[args.model] # e.g. "124M", or "d12"
         write_model(model, f"gpt2_{model_size_str}.bin", dtype="float32")
         write_model(model, f"gpt2_{model_size_str}_bf16.bin", dtype="bfloat16")
+        write_model(model, f"gpt2_{model_size_str}_fp16.bin", dtype="float16")
         # save x, y, logits, loss, and parameter gradients, for debugging C
         # always store these in fp32 to have an accurate reference (?)
         write_state(model, x, y, logits, loss, f"gpt2_{model_size_str}_debug_state.bin")

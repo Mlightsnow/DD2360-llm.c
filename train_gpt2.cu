@@ -457,42 +457,43 @@ void gpt2_build_from_checkpoint(GPT2 *model, const char* checkpoint_path, bool w
     // the master weights that are instead stored in the state .bin file.
     // In that case, this function mostly loads the model hyperparameters from the header.
 
-    if (PRECISION_MODE == PRECISION_FP16) {
-        // TODO for later perhaps, would require us dynamically converting the
-        // model weights from fp32 to fp16 online, here in this function, or writing
-        // the fp16 weights directly from Python, which we only do for fp32/bf16 atm.
-        fprintf(stderr, "build_from_checkpoint() does not support fp16 right now.\n");
-        exit(EXIT_FAILURE);
-    }
+    // if (PRECISION_MODE == PRECISION_FP16) {
+    //     // TODO for later perhaps, would require us dynamically converting the
+    //     // model weights from fp32 to fp16 online, here in this function, or writing
+    //     // the fp16 weights directly from Python, which we only do for fp32/bf16 atm.
+    //     fprintf(stderr, "build_from_checkpoint() does not support fp16 right now.\n");
+    //     exit(EXIT_FAILURE);
+        
+    // }
 
     // read in model from a checkpoint file
     FILE *model_file = fopenCheck(checkpoint_path, "rb");
     int model_header[256];
     freadCheck(model_header, sizeof(int), 256, model_file);
     if (model_header[0] != 20240326) { printf("Bad magic model file\n"); exit(EXIT_FAILURE); }
-    int version = model_header[1];
-    if (!(version == 3 || version == 5)) {
-        // 3 = fp32, padded vocab
-        // 5 = bf16, padded vocab, layernorms also in bf16
-        fprintf(stderr, "Bad version in model file\n");
-        fprintf(stderr, "---> HINT: try to re-run `python train_gpt2.py`\n");
-        exit(EXIT_FAILURE);
-    }
 
-    // check if the precision mode of the checkpoing matches the model precision
-    if (weight_init) {
-        if (PRECISION_MODE == PRECISION_BF16 && version != 5) {
-            fprintf(stderr, "Precision is configured as BF16 but model at %s is not.\n", checkpoint_path);
-            fprintf(stderr, "---> HINT: are you sure you're loading a _bf16.bin file?\n");
-            exit(EXIT_FAILURE);
-        }
-        if (PRECISION_MODE == PRECISION_FP32 && version != 3) {
-            fprintf(stderr, "Precision is configured as FP32 but model at %s is not.\n", checkpoint_path);
-            fprintf(stderr, "---> HINT: to turn on FP32 you have to compile like: `make train_gpt2cu PRECISION=FP32`\n");
-            fprintf(stderr, "---> HINT: are you sure you're loading a .bin file without any _bf16 in the name?\n");
-            exit(EXIT_FAILURE);
-        }
-    }
+    // int version = model_header[1];
+    // if (!(version == 3 || version == 5)) {
+    //     // 3 = fp32, padded vocab
+    //     // 5 = bf16, padded vocab, layernorms also in bf16
+    //     fprintf(stderr, "Bad version in model file\n");
+    //     fprintf(stderr, "---> HINT: try to re-run `python train_gpt2.py`\n");
+    //     exit(EXIT_FAILURE);
+    // }
+    // // check if the precision mode of the checkpoing matches the model precision
+    // if (weight_init) {
+    //     if (PRECISION_MODE == PRECISION_BF16 && version != 5) {
+    //         fprintf(stderr, "Precision is configured as BF16 but model at %s is not.\n", checkpoint_path);
+    //         fprintf(stderr, "---> HINT: are you sure you're loading a _bf16.bin file?\n");
+    //         exit(EXIT_FAILURE);
+    //     }
+    //     if (PRECISION_MODE == PRECISION_FP32 && version != 3) {
+    //         fprintf(stderr, "Precision is configured as FP32 but model at %s is not.\n", checkpoint_path);
+    //         fprintf(stderr, "---> HINT: to turn on FP32 you have to compile like: `make train_gpt2cu PRECISION=FP32`\n");
+    //         fprintf(stderr, "---> HINT: are you sure you're loading a .bin file without any _bf16 in the name?\n");
+    //         exit(EXIT_FAILURE);
+    //     }
+    // }
 
     // read in hyperparameters
     model->config.max_seq_len = model_header[2];
@@ -501,6 +502,8 @@ void gpt2_build_from_checkpoint(GPT2 *model, const char* checkpoint_path, bool w
     model->config.num_heads = model_header[5];
     model->config.channels = model_header[6];
     model->config.padded_vocab_size = model_header[7];
+
+    printf("%d\n", model->config.num_layers);
 
     // allocate memory for the model parameters
     gpt2_allocate_weights(model);
