@@ -1,0 +1,731 @@
+==3481340== NVPROF is profiling process 3481340, command: ./train_gpt2cu -e gpt2_124M.bin
+==3481340== Profiling application: ./train_gpt2cu -e gpt2_124M.bin
+==3481340== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   43.88%  4.91060s      1200  4.0922ms  1.5878ms  7.2775ms  volta_sgemm_128x64_tn
+                   19.86%  2.22244s       312  7.1232ms  949.17us  89.042ms  volta_sgemm_128x128_tn
+                    8.86%  991.68ms       196  5.0596ms  1.1041ms  86.456ms  volta_sgemm_128x64_nn
+                    5.82%  651.26ms       336  1.9383ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                    5.81%  650.72ms       192  3.3891ms  1.0599ms  5.2991ms  volta_sgemm_128x64_nt
+                    4.29%  479.66ms       100  4.7966ms  1.4785ms  82.976ms  volta_sgemm_64x64_nt
+                    2.92%  326.45ms       288  1.1335ms  1.1100ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.92%  215.34ms        24  8.9725ms  8.9455ms  8.9910ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    1.20%  134.04ms       336  398.93us  395.61us  408.22us  gelu_forward_kernel2(float*, float const *)
+                    1.10%  123.52ms       576  214.45us  208.09us  221.73us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    0.87%  97.629ms       288  338.99us  334.65us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.72%  80.808ms        48  1.6835ms  1.6796ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.57%  63.776ms        64  996.50us  2.8150us  4.9316ms  void adamw_kernel3<float, float>(float*, float*, float*, float*, float*, unsigned long, long, long, long, float, float, float, float, float, float, float, float, unsigned int)
+                    0.37%  41.543ms       136  305.46us     640ns  2.8118ms  [CUDA memcpy HtoD]
+                    0.33%  36.588ms       717  51.029us     639ns  22.351ms  [CUDA memset]
+                    0.32%  35.541ms       288  123.41us  103.26us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.29%  32.102ms       100  321.02us  315.03us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.26%  28.634ms        48  596.55us  594.49us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.22%  24.085ms       192  125.44us  60.286us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.14%  15.551ms        48  323.98us  320.86us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.10%  10.636ms         4  2.6590ms  2.5229ms  3.0589ms  void global_norm_squared_kernel<float>(float*, float const *, unsigned long, long)
+                    0.06%  7.2520ms        48  151.08us  143.42us  162.88us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.04%  4.2179ms        16  263.62us  2.3360us  1.3442ms  void copy_and_cast_kernel<float, float>(float*, float const *, unsigned long, long, long)
+                    0.03%  3.1406ms        24  130.86us  127.49us  144.96us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.02%  2.5099ms        24  104.58us  101.79us  124.45us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.00%  430.71us         4  107.68us  105.02us  112.19us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.00%  288.79us         4  72.198us  71.263us  72.991us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.00%  71.935us        28  2.5690us  1.5680us  4.1600us  [CUDA memcpy DtoH]
+                    0.00%  67.776us         4  16.944us  16.224us  17.824us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  38.718us         8  4.8390us  3.8720us  5.8560us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+      API calls:   69.42%  8.33894s        53  157.34ms  6.7470us  366.80ms  cudaDeviceSynchronize
+                   15.84%  1.90268s        92  20.681ms  2.1820us  635.10ms  cudaMemcpyAsync
+                    5.24%  629.44ms         4  157.36ms  9.7090us  629.40ms  cudaLaunchKernelExC
+                    2.73%  327.56ms      1801  181.88us  2.4400us  322.29ms  cudaFuncGetAttributes
+                    2.72%  326.25ms        20  16.312ms     288ns  326.21ms  cudaSetDevice
+                    1.84%  221.59ms        72  3.0777ms  13.389us  21.509ms  cudaMemcpy
+                    1.29%  155.29ms         4  38.822ms  43.158us  135.06ms  cudaHostAlloc
+                    0.26%  30.832ms      4768  6.4660us  3.4520us  4.5697ms  cudaLaunchKernel
+                    0.17%  20.837ms         1  20.837ms  20.837ms  20.837ms  cudaMallocManaged
+                    0.13%  15.308ms         1  15.308ms  15.308ms  15.308ms  cudaGetSymbolAddress
+                    0.10%  12.116ms      1453  8.3380us     378ns  10.949ms  cudaOccupancyMaxActiveBlocksPerMultiprocessor
+                    0.07%  8.2856ms         1  8.2856ms  8.2856ms  8.2856ms  cudaFreeHost
+                    0.06%  7.3849ms       338  21.848us     116ns  1.8997ms  cuDeviceGetAttribute
+                    0.02%  2.8816ms        17  169.51us  13.532us  2.3324ms  cudaStreamSynchronize
+                    0.02%  2.8782ms       108  26.650us  3.1660us  517.33us  cudaMalloc
+                    0.02%  2.6732ms       690  3.8740us  1.4720us  55.569us  cudaMemsetAsync
+                    0.02%  2.0301ms         1  2.0301ms  2.0301ms  2.0301ms  cudaGetDeviceProperties
+                    0.01%  1.7998ms      7632     235ns      83ns  739.56us  cudaGetLastError
+                    0.01%  1.2110ms        27  44.850us  5.7490us  74.966us  cudaMemset
+                    0.01%  1.0442ms      2401     434ns     292ns  13.759us  cudaFuncSetAttribute
+                    0.00%  225.01us       795     283ns     124ns  9.2110us  cuGetProcAddress
+                    0.00%  125.18us         1  125.18us  125.18us  125.18us  cudaFree
+                    0.00%  117.41us       332     353ns     220ns  7.6840us  cudaThreadExchangeStreamCaptureMode
+                    0.00%  115.11us        19  6.0580us     612ns  18.033us  cudaEventRecord
+                    0.00%  69.315us         4  17.328us  7.1030us  36.219us  cuDeviceGetName
+                    0.00%  58.373us         3  19.457us  3.3460us  36.028us  cudaStreamCreateWithFlags
+                    0.00%  49.145us         2  24.572us  17.622us  31.523us  cudaStreamCreate
+                    0.00%  33.650us        13  2.5880us     224ns  12.966us  cudaGetDevice
+                    0.00%  31.101us         1  31.101us  31.101us  31.101us  cudaMallocHost
+                    0.00%  25.825us         1  25.825us  25.825us  25.825us  cudaMemGetInfo
+                    0.00%  23.835us        11  2.1660us     531ns  4.0600us  cudaStreamWaitEvent
+                    0.00%  21.064us        23     915ns     229ns  9.3750us  cudaDeviceGetAttribute
+                    0.00%  17.652us         4  4.4130us  2.0890us  6.3540us  cuInit
+                    0.00%  17.076us         4  4.2690us  3.7820us  4.9100us  cudaEventSynchronize
+                    0.00%  15.566us         1  15.566us  15.566us  15.566us  cuDeviceGetPCIBusId
+                    0.00%  14.569us         4  3.6420us  2.7820us  4.3430us  cudaStreamGetCaptureInfo
+                    0.00%  13.675us        28     488ns     245ns  1.1160us  cuGetProcAddress
+                    0.00%  12.483us         4  3.1200us  3.0220us  3.2530us  cudaEventElapsedTime
+                    0.00%  12.216us         1  12.216us  12.216us  12.216us  cudaStreamDestroy
+                    0.00%  11.358us         1  11.358us  11.358us  11.358us  cudaProfilerStart
+                    0.00%  8.0700us         3  2.6900us     921ns  3.7100us  cudaEventCreateWithFlags
+                    0.00%  7.7310us         2  3.8650us  1.0660us  6.6650us  cudaEventCreate
+                    0.00%  3.8390us         1  3.8390us  3.8390us  3.8390us  cudaDeviceGetPCIBusId
+                    0.00%  2.5480us         5     509ns     178ns  1.7900us  cuDeviceGetCount
+                    0.00%  2.1890us         3     729ns     539ns     910ns  cuDeviceTotalMem
+                    0.00%  2.1320us         3     710ns     260ns     941ns  cudaDriverGetVersion
+                    0.00%  2.1220us         6     353ns     135ns  1.1370us  cuDeviceGet
+                    0.00%  1.3460us         2     673ns     364ns     982ns  cudaGetDriverEntryPoint
+                    0.00%     986ns         3     328ns     215ns     465ns  cuDeviceGetUuid
+                    0.00%     804ns         3     268ns     232ns     299ns  cuModuleGetLoadingMode
+                    0.00%     683ns         3     227ns     155ns     358ns  cuDriverGetVersion
+
+==3481340== NVTX result:
+==3481340== Warning: Found 1 invalid range marker(s)
+==3481340==   Thread "<unnamed>" (id = 1757286400)
+==3481340==     Domain "NCCL"
+==3481340==       Range "ncclAllReduce"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  629.69ms         4  157.42ms  60.081us  629.49ms  ncclAllReduce
+ GPU activities:  100.00%  67.776us         4  16.944us  16.224us  17.824us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+      API calls:  100.00%  629.44ms         4  157.36ms  9.7090us  629.40ms  cudaLaunchKernelExC
+
+==3481340==       Range "ncclCommInitRank"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  376.56ms         1  376.56ms  376.56ms  376.56ms  ncclCommInitRank
+ GPU activities:   61.05%  70.972us        97     731ns     639ns  3.3600us  [CUDA memset]
+                   38.95%  45.279us        65     696ns     640ns  1.3120us  [CUDA memcpy HtoD]
+      API calls:   51.62%  250.07us        97  2.5780us  1.4720us  38.115us  cudaMemsetAsync
+                   48.38%  234.35us        65  3.6050us  2.1820us  29.995us  cudaMemcpyAsync
+
+==3481340==     Domain "<unnamed>"
+==3481340==       Range "InitOpt"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  23.168us         1  23.168us  23.168us  23.168us  InitOpt
+ GPU activities:  100.00%  4.2539ms         2  2.1269ms  2.1243ms  2.1295ms  [CUDA memset]
+      API calls:  100.00%  21.809us         2  10.904us  5.7490us  16.060us  cudaMemset
+
+==3481340==       Range "Layer 0"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  18.860ms        28  673.58us  185.41us  12.767ms  Layer 0
+ GPU activities:   57.00%  364.03ms       100  3.6403ms  1.8017ms  7.2772ms  volta_sgemm_128x64_tn
+                    8.50%  54.276ms        16  3.3922ms  1.1407ms  4.5522ms  volta_sgemm_128x64_nn
+                    8.35%  53.307ms        16  3.3317ms  1.0951ms  4.5297ms  volta_sgemm_128x64_nt
+                    8.16%  52.146ms        28  1.8623ms  1.7645ms  2.4808ms  volta_sgemm_64x64_nn
+                    4.31%  27.516ms        24  1.1465ms  949.42us  1.7716ms  volta_sgemm_128x128_tn
+                    4.23%  26.998ms        24  1.1249ms  1.1100ms  1.1655ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.94%  12.376ms         8  1.5469ms  1.5282ms  1.5539ms  volta_sgemm_64x64_nt
+                    1.76%  11.242ms        28  401.51us  396.76us  408.22us  gelu_forward_kernel2(float*, float const *)
+                    1.63%  10.382ms        48  216.29us  210.84us  221.50us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.27%  8.0972ms        24  337.38us  335.23us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    1.05%  6.7255ms         4  1.6814ms  1.6796ms  1.6828ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.42%  2.6993ms        24  112.47us  103.26us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.40%  2.5672ms         8  320.90us  316.92us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.37%  2.3857ms         4  596.42us  595.25us  597.97us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.31%  2.0015ms        16  125.10us  61.151us  216.06us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.20%  1.2940ms         4  323.51us  323.00us  324.15us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  597.21us         4  149.30us  147.93us  149.89us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  63.521us        48  1.3230us     641ns  2.0160us  [CUDA memset]
+      API calls:   88.11%  2.5387ms       380  6.6800us  3.5280us  28.211us  cudaLaunchKernel
+                   11.89%  342.73us        48  7.1400us  1.9220us  28.050us  cudaMemsetAsync
+
+==3481340==       Range "Layer 1"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5960ms        28  128.43us  98.915us  312.23us  Layer 1
+ GPU activities:   57.16%  372.52ms       100  3.7252ms  1.5878ms  7.2775ms  volta_sgemm_128x64_tn
+                    8.59%  55.974ms        16  3.4984ms  1.1599ms  4.9023ms  volta_sgemm_128x64_nn
+                    8.38%  54.628ms        16  3.4142ms  1.1130ms  4.8091ms  volta_sgemm_128x64_nt
+                    8.09%  52.689ms        28  1.8817ms  1.7803ms  2.4856ms  volta_sgemm_64x64_nn
+                    4.34%  28.305ms        24  1.1794ms  949.17us  1.7710ms  volta_sgemm_128x128_tn
+                    4.14%  26.976ms        24  1.1240ms  1.1132ms  1.1638ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.94%  12.613ms         8  1.5766ms  1.5521ms  1.6085ms  volta_sgemm_64x64_nt
+                    1.72%  11.218ms        28  400.64us  396.09us  405.69us  gelu_forward_kernel2(float*, float const *)
+                    1.58%  10.267ms        48  213.89us  209.57us  219.20us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.24%  8.0699ms        24  336.25us  334.65us  355.23us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    1.03%  6.7329ms         4  1.6832ms  1.6824ms  1.6838ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.42%  2.7447ms        24  114.36us  103.74us  164.22us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.39%  2.5632ms         8  320.41us  317.50us  323.07us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.37%  2.3840ms         4  596.00us  594.49us  597.46us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.31%  2.0124ms        16  125.78us  61.119us  219.74us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.20%  1.2963ms         4  324.08us  322.65us  325.15us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  607.22us         4  151.81us  149.73us  153.18us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  67.141us        48  1.3980us     640ns  1.6640us  [CUDA memset]
+      API calls:   92.58%  1.8618ms       380  4.8990us  3.6140us  25.706us  cudaLaunchKernel
+                    7.42%  149.18us        48  3.1070us  1.9940us  7.8410us  cudaMemsetAsync
+
+==3481340==       Range "Layer 10"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.8530ms        28  137.61us  94.722us  363.22us  Layer 10
+ GPU activities:   59.35%  415.45ms       100  4.1545ms  2.0131ms  5.9115ms  volta_sgemm_128x64_tn
+                    8.00%  56.010ms        16  3.5006ms  1.1597ms  4.7927ms  volta_sgemm_128x64_nn
+                    7.78%  54.452ms        28  1.9447ms  1.8763ms  2.0285ms  volta_sgemm_64x64_nn
+                    7.77%  54.402ms        16  3.4002ms  1.1134ms  4.6537ms  volta_sgemm_128x64_nt
+                    4.52%  31.651ms        24  1.3188ms  1.2288ms  1.4191ms  volta_sgemm_128x128_tn
+                    3.89%  27.221ms        24  1.1342ms  1.1207ms  1.1433ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.79%  12.561ms         8  1.5701ms  1.5285ms  1.5820ms  volta_sgemm_64x64_nt
+                    1.59%  11.147ms        28  398.12us  395.87us  401.53us  gelu_forward_kernel2(float*, float const *)
+                    1.47%  10.280ms        48  214.16us  208.09us  220.86us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1377ms        24  339.07us  336.95us  341.53us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7377ms         4  1.6844ms  1.6833ms  1.6864ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0004ms        24  125.02us  117.98us  133.02us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5654ms         8  320.67us  315.26us  325.98us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3837ms         4  595.93us  595.06us  596.57us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  2.0093ms        16  125.58us  61.023us  217.56us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.19%  1.2982ms         4  324.56us  323.29us  325.59us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  604.44us         4  151.11us  149.57us  151.77us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  67.809us        48  1.4120us     672ns  1.7600us  [CUDA memset]
+      API calls:   93.65%  2.0655ms       380  5.4350us  3.4850us  188.46us  cudaLaunchKernel
+                    6.35%  140.15us        48  2.9190us  1.9020us  5.1400us  cudaMemsetAsync
+
+==3481340==       Range "Layer 11"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.9724ms        28  141.87us  93.748us  463.07us  Layer 11
+ GPU activities:   58.07%  414.33ms       100  4.1433ms  2.0821ms  6.1869ms  volta_sgemm_128x64_tn
+                    8.84%  63.071ms        16  3.9419ms  1.2895ms  5.4750ms  volta_sgemm_128x64_nn
+                    8.52%  60.754ms        16  3.7971ms  1.2376ms  5.2991ms  volta_sgemm_128x64_nt
+                    7.63%  54.406ms        28  1.9431ms  1.8749ms  2.1004ms  volta_sgemm_64x64_nn
+                    4.43%  31.575ms        24  1.3156ms  1.2339ms  1.5101ms  volta_sgemm_128x128_tn
+                    3.81%  27.217ms        24  1.1340ms  1.1284ms  1.1446ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.93%  13.791ms         8  1.7238ms  1.6070ms  1.7601ms  volta_sgemm_64x64_nt
+                    1.56%  11.154ms        28  398.36us  396.22us  401.82us  gelu_forward_kernel2(float*, float const *)
+                    1.44%  10.263ms        48  213.82us  209.08us  219.04us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.14%  8.1345ms        24  338.94us  337.31us  342.07us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.95%  6.7696ms         4  1.6924ms  1.6904ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.42%  2.9914ms        24  124.64us  117.89us  140.48us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.36%  2.5856ms         8  323.20us  321.05us  325.63us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.33%  2.3848ms         4  596.20us  595.16us  597.27us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  2.0552ms        16  128.45us  62.271us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2922ms         4  323.04us  320.86us  324.60us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  646.87us         4  161.72us  160.54us  162.88us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  52.866us        48  1.1010us     672ns  1.7920us  [CUDA memset]
+      API calls:   92.58%  1.9780ms       380  5.2050us  3.4940us  29.436us  cudaLaunchKernel
+                    7.42%  158.62us        48  3.3040us  2.1620us  8.5970us  cudaMemsetAsync
+
+==3481340==       Range "Layer 2"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5151ms        28  125.54us  95.523us  324.01us  Layer 2
+ GPU activities:   58.51%  404.42ms       100  4.0442ms  1.8098ms  7.2595ms  volta_sgemm_128x64_tn
+                    8.27%  57.181ms        16  3.5738ms  1.1999ms  4.9752ms  volta_sgemm_128x64_nn
+                    8.12%  56.118ms        16  3.5073ms  1.1519ms  5.0404ms  volta_sgemm_128x64_nt
+                    7.84%  54.217ms        28  1.9363ms  1.7737ms  2.4821ms  volta_sgemm_64x64_nn
+                    4.44%  30.704ms        24  1.2793ms  1.0779ms  1.7710ms  volta_sgemm_128x128_tn
+                    3.92%  27.122ms        24  1.1301ms  1.1169ms  1.1612ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.91%  13.181ms         8  1.6476ms  1.6019ms  1.7265ms  volta_sgemm_64x64_nt
+                    1.61%  11.160ms        28  398.57us  396.12us  400.89us  gelu_forward_kernel2(float*, float const *)
+                    1.49%  10.310ms        48  214.79us  208.67us  221.05us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.17%  8.1186ms        24  338.28us  335.58us  355.67us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.98%  6.7469ms         4  1.6867ms  1.6849ms  1.6897ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.42%  2.9287ms        24  122.03us  108.06us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5760ms         8  322.01us  318.43us  325.63us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.35%  2.3924ms         4  598.09us  596.73us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  2.0150ms        16  125.94us  60.671us  218.68us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.19%  1.2946ms         4  323.66us  322.23us  325.02us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  624.53us         4  156.13us  152.86us  160.32us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  68.574us        48  1.4280us     672ns  2.2400us  [CUDA memset]
+      API calls:   92.09%  1.7841ms       380  4.6940us  3.5200us  22.264us  cudaLaunchKernel
+                    7.91%  153.30us        48  3.1930us  2.0230us  9.2530us  cudaMemsetAsync
+
+==3481340==       Range "Layer 3"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5364ms        28  126.30us  95.620us  316.18us  Layer 3
+ GPU activities:   59.58%  418.57ms       100  4.1857ms  2.0157ms  7.2583ms  volta_sgemm_128x64_tn
+                    7.81%  54.887ms        16  3.4305ms  1.1596ms  4.7090ms  volta_sgemm_128x64_nn
+                    7.79%  54.759ms        28  1.9557ms  1.8520ms  2.4949ms  volta_sgemm_64x64_nn
+                    7.72%  54.266ms        16  3.3916ms  1.1135ms  4.6871ms  volta_sgemm_128x64_nt
+                    4.55%  31.958ms        24  1.3316ms  1.2130ms  1.7722ms  volta_sgemm_128x128_tn
+                    3.88%  27.247ms        24  1.1353ms  1.1258ms  1.1658ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.80%  12.612ms         8  1.5765ms  1.5509ms  1.6088ms  volta_sgemm_64x64_nt
+                    1.59%  11.159ms        28  398.54us  396.25us  405.02us  gelu_forward_kernel2(float*, float const *)
+                    1.46%  10.280ms        48  214.16us  209.56us  218.65us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1456ms        24  339.40us  336.44us  354.97us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7339ms         4  1.6835ms  1.6820ms  1.6847ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0225ms        24  125.94us  116.32us  164.13us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5644ms         8  320.55us  315.45us  325.66us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3880ms         4  597.01us  596.18us  597.97us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  2.0033ms        16  125.20us  60.640us  216.03us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2985ms         4  324.63us  323.67us  325.31us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  604.70us         4  151.17us  149.37us  152.86us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  68.608us        48  1.4290us     672ns  1.7920us  [CUDA memset]
+      API calls:   92.57%  1.7927ms       380  4.7170us  3.5890us  21.919us  cudaLaunchKernel
+                    7.43%  143.90us        48  2.9970us  2.0340us  6.0180us  cudaMemsetAsync
+
+==3481340==       Range "Layer 4"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5678ms        28  127.42us  96.690us  326.55us  Layer 4
+ GPU activities:   59.73%  420.04ms       100  4.2004ms  2.0133ms  5.8112ms  volta_sgemm_128x64_tn
+                    7.82%  54.966ms        28  1.9631ms  1.8783ms  2.1427ms  volta_sgemm_64x64_nn
+                    7.79%  54.748ms        16  3.4218ms  1.1594ms  4.7921ms  volta_sgemm_128x64_nn
+                    7.63%  53.677ms        16  3.3548ms  1.1131ms  4.7708ms  volta_sgemm_128x64_nt
+                    4.52%  31.791ms        24  1.3246ms  1.2135ms  1.4195ms  volta_sgemm_128x128_tn
+                    3.89%  27.347ms        24  1.1394ms  1.1221ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.77%  12.476ms         8  1.5595ms  1.5265ms  1.6362ms  volta_sgemm_64x64_nt
+                    1.58%  11.111ms        28  396.84us  395.61us  402.01us  gelu_forward_kernel2(float*, float const *)
+                    1.45%  10.223ms        48  212.97us  208.25us  218.49us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1639ms        24  340.16us  336.89us  355.35us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7254ms         4  1.6814ms  1.6798ms  1.6833ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0067ms        24  125.28us  116.54us  132.96us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5703ms         8  321.28us  317.47us  324.60us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3869ms         4  596.73us  595.99us  597.11us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.28%  2.0027ms        16  125.17us  60.831us  217.21us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2937ms         4  323.43us  321.82us  324.60us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  603.83us         4  150.96us  149.41us  155.04us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  69.954us        48  1.4570us     672ns  2.2410us  [CUDA memset]
+      API calls:   91.94%  1.8375ms       380  4.8350us  3.6340us  16.949us  cudaLaunchKernel
+                    8.06%  161.04us        48  3.3550us  2.1010us  7.5950us  cudaMemsetAsync
+
+==3481340==       Range "Layer 5"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5338ms        28  126.21us  94.528us  321.19us  Layer 5
+ GPU activities:   59.79%  420.79ms       100  4.2079ms  2.0131ms  5.9277ms  volta_sgemm_128x64_tn
+                    7.79%  54.849ms        28  1.9589ms  1.8695ms  2.0691ms  volta_sgemm_64x64_nn
+                    7.74%  54.476ms        16  3.4048ms  1.1595ms  4.6303ms  volta_sgemm_128x64_nn
+                    7.60%  53.466ms        16  3.3416ms  1.1133ms  4.6065ms  volta_sgemm_128x64_nt
+                    4.57%  32.159ms        24  1.3400ms  1.2126ms  1.4496ms  volta_sgemm_128x128_tn
+                    3.87%  27.235ms        24  1.1348ms  1.1241ms  1.1444ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.77%  12.458ms         8  1.5572ms  1.5529ms  1.5798ms  volta_sgemm_64x64_nt
+                    1.58%  11.142ms        28  397.92us  395.93us  402.26us  gelu_forward_kernel2(float*, float const *)
+                    1.47%  10.340ms        48  215.42us  209.05us  220.44us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1522ms        24  339.67us  336.63us  342.39us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7304ms         4  1.6826ms  1.6820ms  1.6835ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0354ms        24  126.48us  116.35us  135.39us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.36%  2.5672ms         8  320.89us  315.93us  325.79us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3854ms         4  596.34us  595.67us  596.85us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.28%  2.0041ms        16  125.26us  60.863us  216.54us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2978ms         4  324.45us  323.52us  325.08us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.09%  602.29us         4  150.57us  149.73us  151.42us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  66.658us        48  1.3880us     640ns  1.8560us  [CUDA memset]
+      API calls:   92.22%  1.8245ms       380  4.8010us  3.5630us  26.769us  cudaLaunchKernel
+                    7.78%  153.97us        48  3.2070us  2.1420us  10.195us  cudaMemsetAsync
+
+==3481340==       Range "Layer 6"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.6037ms        28  128.70us  94.437us  330.32us  Layer 6
+ GPU activities:   59.87%  421.08ms       100  4.2108ms  1.9792ms  5.9264ms  volta_sgemm_128x64_tn
+                    7.81%  54.914ms        28  1.9612ms  1.8667ms  2.0770ms  volta_sgemm_64x64_nn
+                    7.71%  54.222ms        16  3.3888ms  1.1397ms  4.6294ms  volta_sgemm_128x64_nn
+                    7.57%  53.244ms        16  3.3278ms  1.0938ms  4.6085ms  volta_sgemm_128x64_nt
+                    4.57%  32.118ms        24  1.3383ms  1.2111ms  1.4477ms  volta_sgemm_128x128_tn
+                    3.88%  27.290ms        24  1.1371ms  1.1284ms  1.1444ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.75%  12.314ms         8  1.5392ms  1.5024ms  1.5812ms  volta_sgemm_64x64_nt
+                    1.58%  11.117ms        28  397.04us  395.74us  399.99us  gelu_forward_kernel2(float*, float const *)
+                    1.46%  10.245ms        48  213.44us  209.69us  217.31us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1495ms        24  339.56us  336.67us  342.27us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7314ms         4  1.6828ms  1.6812ms  1.6842ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0356ms        24  126.48us  116.38us  135.58us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.36%  2.5596ms         8  319.95us  316.38us  325.27us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3862ms         4  596.54us  596.09us  596.73us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.28%  1.9974ms        16  124.84us  61.119us  215.26us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.3002ms         4  325.04us  323.19us  326.78us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.08%  596.95us         4  149.24us  148.03us  151.29us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  68.264us        48  1.4220us     640ns  1.7290us  [CUDA memset]
+      API calls:   92.30%  1.8668ms       380  4.9120us  3.6110us  31.182us  cudaLaunchKernel
+                    7.70%  155.84us        48  3.2460us  2.0380us  7.5440us  cudaMemsetAsync
+
+==3481340==       Range "Layer 7"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.5410ms        28  126.46us  95.417us  318.44us  Layer 7
+ GPU activities:   60.03%  421.10ms       100  4.2110ms  1.9484ms  5.9347ms  volta_sgemm_128x64_tn
+                    7.80%  54.722ms        28  1.9544ms  1.8525ms  2.0769ms  volta_sgemm_64x64_nn
+                    7.61%  53.411ms        16  3.3382ms  1.1219ms  4.5518ms  volta_sgemm_128x64_nn
+                    7.47%  52.373ms        16  3.2733ms  1.0768ms  4.5293ms  volta_sgemm_128x64_nt
+                    4.59%  32.187ms        24  1.3411ms  1.2341ms  1.4487ms  volta_sgemm_128x128_tn
+                    3.88%  27.208ms        24  1.1336ms  1.1257ms  1.1412ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.74%  12.207ms         8  1.5259ms  1.5034ms  1.5537ms  volta_sgemm_64x64_nt
+                    1.60%  11.214ms        28  400.48us  397.40us  404.60us  gelu_forward_kernel2(float*, float const *)
+                    1.47%  10.311ms        48  214.82us  208.09us  221.73us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1555ms        24  339.81us  337.37us  342.65us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7247ms         4  1.6812ms  1.6796ms  1.6824ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0366ms        24  126.52us  117.73us  135.42us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5658ms         8  320.72us  316.06us  325.91us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3825ms         4  595.62us  594.49us  596.50us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.28%  1.9951ms        16  124.70us  60.800us  215.23us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2926ms         4  323.14us  321.11us  324.22us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.08%  589.91us         4  147.48us  146.05us  149.66us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  66.844us        48  1.3920us     640ns  1.6310us  [CUDA memset]
+      API calls:   91.41%  1.8182ms       380  4.7840us  3.5560us  23.877us  cudaLaunchKernel
+                    8.59%  170.82us        48  3.5580us  1.9500us  21.191us  cudaMemsetAsync
+
+==3481340==       Range "Layer 8"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.4894ms        28  124.62us  94.172us  327.59us  Layer 8
+ GPU activities:   60.07%  420.42ms       100  4.2042ms  1.9177ms  5.9049ms  volta_sgemm_128x64_tn
+                    7.80%  54.630ms        28  1.9511ms  1.8588ms  2.0712ms  volta_sgemm_64x64_nn
+                    7.60%  53.167ms        16  3.3229ms  1.1041ms  4.4767ms  volta_sgemm_128x64_nn
+                    7.44%  52.049ms        16  3.2531ms  1.0599ms  4.4548ms  volta_sgemm_128x64_nt
+                    4.58%  32.025ms        24  1.3344ms  1.2307ms  1.4463ms  volta_sgemm_128x128_tn
+                    3.90%  27.306ms        24  1.1378ms  1.1253ms  1.1521ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.72%  12.029ms         8  1.5036ms  1.4785ms  1.5291ms  volta_sgemm_64x64_nt
+                    1.60%  11.218ms        28  400.63us  397.53us  404.70us  gelu_forward_kernel2(float*, float const *)
+                    1.47%  10.294ms        48  214.46us  209.76us  218.78us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.16%  8.1536ms        24  339.73us  337.37us  342.91us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7248ms         4  1.6812ms  1.6809ms  1.6814ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0302ms        24  126.26us  117.98us  135.42us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.36%  2.5537ms         8  319.21us  315.03us  324.41us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3869ms         4  596.73us  595.99us  598.17us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  1.9953ms        16  124.71us  60.927us  214.68us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.19%  1.3036ms         4  325.91us  323.42us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.08%  583.35us         4  145.84us  143.42us  147.87us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  67.519us        48  1.4060us     640ns  1.8240us  [CUDA memset]
+      API calls:   92.61%  1.7843ms       380  4.6950us  3.6070us  15.496us  cudaLaunchKernel
+                    7.39%  142.30us        48  2.9640us  2.0460us  6.6280us  cudaMemsetAsync
+
+==3481340==       Range "Layer 9"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  4.3166ms        28  154.16us  96.003us  871.91us  Layer 9
+ GPU activities:   59.87%  417.83ms       100  4.1783ms  1.9484ms  5.8074ms  volta_sgemm_128x64_tn
+                    7.81%  54.514ms        28  1.9469ms  1.8323ms  2.0334ms  volta_sgemm_64x64_nn
+                    7.67%  53.521ms        16  3.3451ms  1.1221ms  4.5520ms  volta_sgemm_128x64_nn
+                    7.51%  52.434ms        16  3.2771ms  1.0771ms  4.5052ms  volta_sgemm_128x64_nt
+                    4.56%  31.858ms        24  1.3274ms  1.2335ms  1.4218ms  volta_sgemm_128x128_tn
+                    3.91%  27.289ms        24  1.1370ms  1.1298ms  1.1454ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.74%  12.176ms         8  1.5220ms  1.5006ms  1.5295ms  volta_sgemm_64x64_nt
+                    1.60%  11.160ms        28  398.57us  396.31us  401.34us  gelu_forward_kernel2(float*, float const *)
+                    1.48%  10.330ms        48  215.21us  210.33us  220.48us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.17%  8.1506ms        24  339.61us  337.08us  342.07us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.96%  6.7251ms         4  1.6813ms  1.6802ms  1.6819ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.43%  3.0094ms        24  125.39us  117.92us  133.12us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.37%  2.5678ms         8  320.97us  315.83us  325.66us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.34%  2.3881ms         4  597.01us  596.25us  598.13us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.29%  1.9936ms        16  124.60us  60.286us  215.20us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.18%  1.2893ms         4  322.33us  321.88us  323.26us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.08%  590.71us         4  147.68us  146.01us  148.35us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.01%  68.155us        48  1.4190us     640ns  1.7280us  [CUDA memset]
+      API calls:   92.11%  1.8619ms       380  4.8990us  3.6250us  22.298us  cudaLaunchKernel
+                    7.89%  159.48us        48  3.3220us  2.0920us  14.727us  cudaMemsetAsync
+
+==3481340==       Range "Train step 0"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  8.15345s         1  8.15345s  8.15345s  8.15345s  Train step 0
+ GPU activities:   52.24%  4.23341s      1020  4.1504ms  1.8012ms  7.2775ms  volta_sgemm_128x64_tn
+                   24.00%  1.94520s       273  7.1253ms  1.0687ms  89.042ms  volta_sgemm_128x128_tn
+                    6.32%  512.02ms       264  1.9395ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                    3.53%  285.69ms       252  1.1337ms  1.1149ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    3.01%  244.30ms        49  4.9857ms  1.1041ms  79.181ms  volta_sgemm_128x64_nn
+                    2.32%  188.41ms        21  8.9718ms  8.9455ms  8.9910ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    2.00%  161.93ms        48  3.3735ms  1.0599ms  5.2985ms  volta_sgemm_128x64_nt
+                    1.48%  120.24ms        25  4.8095ms  1.4785ms  82.812ms  volta_sgemm_64x64_nt
+                    1.33%  108.08ms       504  214.44us  208.09us  221.73us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.30%  105.29ms       264  398.83us  395.61us  408.22us  gelu_forward_kernel2(float*, float const *)
+                    1.05%  85.419ms       252  338.96us  334.65us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.38%  31.076ms       252  123.32us  107.36us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.25%  20.205ms        12  1.6838ms  1.6798ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    0.20%  15.982ms        16  998.85us  2.8150us  4.9316ms  void adamw_kernel3<float, float>(float*, float*, float*, float*, float*, unsigned long, long, long, long, float, float, float, float, float, float, float, float, unsigned int)
+                    0.10%  8.0185ms        25  320.74us  315.26us  325.63us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.09%  7.1568ms        12  596.40us  594.49us  597.97us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.09%  6.9578ms       351  19.822us     640ns  2.1356ms  [CUDA memset]
+                    0.07%  6.0157ms        48  125.33us  60.286us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.05%  4.2179ms        16  263.62us  2.3360us  1.3442ms  void copy_and_cast_kernel<float, float>(float*, float const *, unsigned long, long, long)
+                    0.05%  3.8879ms        12  323.99us  322.56us  325.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.04%  3.0589ms         1  3.0589ms  3.0589ms  3.0589ms  void global_norm_squared_kernel<float>(float*, float const *, unsigned long, long)
+                    0.03%  2.7472ms        21  130.82us  127.49us  144.96us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.03%  2.1987ms        21  104.70us  101.79us  124.45us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.02%  1.8108ms        12  150.90us  143.42us  162.78us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.00%  157.98us        44  3.5900us  2.7840us  13.888us  [CUDA memcpy HtoD]
+                    0.00%  106.46us         1  106.46us  106.46us  106.46us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.00%  72.542us         1  72.542us  72.542us  72.542us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.00%  62.014us        22  2.8180us  2.0160us  4.1600us  [CUDA memcpy DtoH]
+                    0.00%  16.224us         1  16.224us  16.224us  16.224us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  9.6640us         2  4.8320us  4.0000us  5.6640us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+      API calls:   73.06%  629.40ms         1  629.40ms  629.40ms  629.40ms  cudaLaunchKernelExC
+                   24.08%  207.43ms        63  3.2926ms  13.389us  21.509ms  cudaMemcpy
+                    2.57%  22.180ms      3424  6.4770us  3.4850us  4.5697ms  cudaLaunchKernel
+                    0.15%  1.2732ms       328  3.8810us  1.9020us  51.172us  cudaMemsetAsync
+                    0.13%  1.1195ms        23  48.672us  5.7490us  74.966us  cudaMemset
+                    0.01%  126.91us         3  42.303us  25.153us  60.310us  cudaMemcpyAsync
+
+==3481340==       Range "Train step 1"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  1.00035s         1  1.00035s  1.00035s  1.00035s  Train step 1
+ GPU activities:   24.68%  246.57ms        49  5.0321ms  1.1224ms  79.264ms  volta_sgemm_128x64_nn
+                   22.22%  221.99ms        60  3.6998ms  1.5878ms  5.6980ms  volta_sgemm_128x64_tn
+                   16.37%  163.59ms        48  3.4082ms  1.0763ms  5.2985ms  volta_sgemm_128x64_nt
+                   11.89%  118.77ms        25  4.7506ms  1.5017ms  80.895ms  volta_sgemm_64x64_nt
+                    9.13%  91.208ms        13  7.0160ms  949.17us  76.022ms  volta_sgemm_128x128_tn
+                    4.59%  45.852ms        24  1.9105ms  1.7711ms  2.0105ms  volta_sgemm_64x64_nn
+                    2.02%  20.203ms        12  1.6836ms  1.6796ms  1.6911ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    1.59%  15.922ms        16  995.15us  3.2320us  4.9208ms  void adamw_kernel3<float, float>(float*, float*, float*, float*, float*, unsigned long, long, long, long, float, float, float, float, float, float, float, float, unsigned int)
+                    1.36%  13.559ms        12  1.1299ms  1.1100ms  1.1438ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    0.96%  9.5865ms        24  399.44us  395.83us  406.68us  gelu_forward_kernel2(float*, float const *)
+                    0.90%  8.9775ms         1  8.9775ms  8.9775ms  8.9775ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.80%  8.0283ms        25  321.13us  315.83us  325.98us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.72%  7.1597ms        12  596.65us  595.35us  598.58us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.60%  6.0262ms        48  125.55us  60.640us  224.80us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.51%  5.1383ms        24  214.10us  209.25us  220.51us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    0.41%  4.0649ms        12  338.74us  335.10us  341.43us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.39%  3.8859ms        12  323.82us  320.86us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.25%  2.5229ms         1  2.5229ms  2.5229ms  2.5229ms  void global_norm_squared_kernel<float>(float*, float const *, unsigned long, long)
+                    0.23%  2.3074ms        89  25.925us     640ns  2.1341ms  [CUDA memset]
+                    0.18%  1.8143ms        12  151.20us  145.98us  160.67us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.15%  1.4660ms        12  122.17us  103.26us  130.88us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.01%  129.98us         1  129.98us  129.98us  129.98us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.01%  107.04us         1  107.04us  107.04us  107.04us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.01%  102.69us         1  102.69us  102.69us  102.69us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.01%  71.998us         1  71.998us  71.998us  71.998us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.00%  30.719us         4  7.6790us  2.7840us  14.144us  [CUDA memcpy HtoD]
+                    0.00%  17.824us         1  17.824us  17.824us  17.824us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  9.5350us         2  4.7670us  3.8720us  5.6630us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+                    0.00%  3.5840us         2  1.7920us  1.5680us  2.0160us  [CUDA memcpy DtoH]
+      API calls:   98.86%  632.42ms         3  210.81ms  25.445us  632.33ms  cudaMemcpyAsync
+                    0.74%  4.7100ms         3  1.5700ms  30.169us  2.5272ms  cudaMemcpy
+                    0.35%  2.2188ms       448  4.9520us  3.4520us  34.127us  cudaLaunchKernel
+                    0.05%  317.70us        88  3.6100us  1.9940us  53.783us  cudaMemsetAsync
+                    0.00%  11.685us         1  11.685us  11.685us  11.685us  cudaMemset
+                    0.00%  11.399us         1  11.399us  11.399us  11.399us  cudaLaunchKernelExC
+
+==3481340==       Range "Train step 2"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  1.01288s         1  1.01288s  1.01288s  1.01288s  Train step 2
+ GPU activities:   24.98%  252.74ms        49  5.1579ms  1.1218ms  86.456ms  volta_sgemm_128x64_nn
+                   22.33%  225.93ms        60  3.7655ms  1.8121ms  5.5919ms  volta_sgemm_128x64_tn
+                   16.07%  162.57ms        48  3.3869ms  1.0771ms  5.2991ms  volta_sgemm_128x64_nt
+                   11.85%  119.92ms        25  4.7967ms  1.5025ms  82.179ms  volta_sgemm_64x64_nt
+                    9.16%  92.655ms        13  7.1273ms  1.0764ms  76.954ms  volta_sgemm_128x128_tn
+                    4.61%  46.594ms        24  1.9414ms  1.8129ms  2.0441ms  volta_sgemm_64x64_nn
+                    2.00%  20.199ms        12  1.6832ms  1.6796ms  1.6904ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    1.57%  15.921ms        16  995.04us  3.4880us  4.9225ms  void adamw_kernel3<float, float>(float*, float*, float*, float*, float*, unsigned long, long, long, long, float, float, float, float, float, float, float, float, unsigned int)
+                    1.34%  13.590ms        12  1.1325ms  1.1144ms  1.1428ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    0.95%  9.5818ms        24  399.24us  396.06us  404.60us  gelu_forward_kernel2(float*, float const *)
+                    0.89%  8.9768ms         1  8.9768ms  8.9768ms  8.9768ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.79%  8.0305ms        25  321.22us  315.03us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.71%  7.1621ms        12  596.85us  595.06us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.60%  6.0201ms        48  125.42us  60.671us  225.08us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.51%  5.1568ms        24  214.87us  209.76us  219.16us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    0.40%  4.0707ms        12  339.23us  335.23us  340.67us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.38%  3.8874ms        12  323.95us  322.04us  326.43us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.25%  2.5279ms         1  2.5279ms  2.5279ms  2.5279ms  void global_norm_squared_kernel<float>(float*, float const *, unsigned long, long)
+                    0.23%  2.3080ms        89  25.932us     640ns  2.1323ms  [CUDA memset]
+                    0.18%  1.8125ms        12  151.04us  146.08us  160.54us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.15%  1.4919ms        12  124.33us  108.29us  128.77us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.01%  133.69us         1  133.69us  133.69us  133.69us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.01%  112.19us         1  112.19us  112.19us  112.19us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.01%  104.70us         1  104.70us  104.70us  104.70us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.01%  72.991us         1  72.991us  72.991us  72.991us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.00%  32.256us         4  8.0640us  2.8800us  13.248us  [CUDA memcpy HtoD]
+                    0.00%  17.504us         1  17.504us  17.504us  17.504us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  9.6960us         2  4.8480us  4.0320us  5.6640us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+                    0.00%  3.2000us         2  1.6000us  1.6000us  1.6000us  [CUDA memcpy DtoH]
+      API calls:   98.54%  634.29ms         3  211.43ms  32.024us  634.16ms  cudaMemcpyAsync
+                    0.73%  4.7070ms         3  1.5690ms  28.277us  2.5308ms  cudaMemcpy
+                    0.65%  4.1623ms       448  9.2900us  3.5360us  938.70us  cudaLaunchKernel
+                    0.07%  461.57us        88  5.2450us  2.5430us  55.569us  cudaMemsetAsync
+                    0.00%  23.682us         1  23.682us  23.682us  23.682us  cudaMemset
+                    0.00%  13.784us         1  13.784us  13.784us  13.784us  cudaLaunchKernelExC
+
+==3481340==       Range "attention_backward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  3.2257ms        48  67.202us  47.648us  157.41us  attention_backward
+ GPU activities:   33.89%  150.79ms        96  1.5708ms  1.4785ms  1.7601ms  volta_sgemm_64x64_nt
+                   22.05%  98.117ms        48  2.0441ms  1.9177ms  2.2833ms  volta_sgemm_128x64_tn
+                   20.77%  92.393ms        48  1.9249ms  1.8323ms  2.0093ms  volta_sgemm_64x64_nn
+                   18.16%  80.808ms        48  1.6835ms  1.6796ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    3.50%  15.551ms        48  323.98us  320.86us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    1.63%  7.2520ms        48  151.08us  143.42us  162.88us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+      API calls:  100.00%  1.8355ms       336  5.4620us  3.5800us  16.888us  cudaLaunchKernel
+
+==3481340==       Range "attention_forward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  11.108ms       288  38.569us  30.952us  219.63us  attention_forward
+ GPU activities:   38.38%  634.48ms       288  2.2031ms  1.5878ms  3.0372ms  volta_sgemm_128x64_tn
+                   33.81%  558.87ms       288  1.9405ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                   19.75%  326.45ms       288  1.1335ms  1.1100ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    5.91%  97.629ms       288  338.99us  334.65us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    2.15%  35.541ms       288  123.41us  103.26us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+      API calls:  100.00%  7.1654ms      1440  4.9750us  3.4940us  188.46us  cudaLaunchKernel
+
+==3481340==       Range "classifier_and_loss"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  2.75188s        24  114.66ms  9.1096ms  647.00ms  classifier_and_loss
+ GPU activities:   36.23%  991.68ms       196  5.0596ms  1.1041ms  86.456ms  volta_sgemm_128x64_nn
+                   23.77%  650.72ms       192  3.3891ms  1.0599ms  5.2991ms  volta_sgemm_128x64_nt
+                   17.52%  479.66ms       100  4.7966ms  1.4785ms  82.976ms  volta_sgemm_64x64_nt
+                    7.87%  215.34ms        24  8.9725ms  8.9455ms  8.9910ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    3.58%  98.117ms        48  2.0441ms  1.9177ms  2.2833ms  volta_sgemm_128x64_tn
+                    3.38%  92.393ms        48  1.9249ms  1.8323ms  2.0093ms  volta_sgemm_64x64_nn
+                    2.95%  80.808ms        48  1.6835ms  1.6796ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    1.17%  32.102ms       100  321.02us  315.03us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    1.05%  28.634ms        48  596.55us  594.49us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.88%  24.085ms       192  125.44us  60.286us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.70%  19.196ms        48  399.93us  397.21us  405.02us  gelu_forward_kernel2(float*, float const *)
+                    0.57%  15.551ms        48  323.98us  320.86us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.26%  7.2520ms        48  151.08us  143.42us  162.88us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.02%  670.47us       316  2.1210us     640ns  57.567us  [CUDA memset]
+                    0.02%  430.71us         4  107.68us  105.02us  112.19us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.01%  288.79us         4  72.198us  71.263us  72.991us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.01%  174.27us        32  5.4450us  2.7840us  14.144us  [CUDA memcpy HtoD]
+                    0.00%  67.776us         4  16.944us  16.224us  17.824us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  65.183us        24  2.7150us  1.5690us  4.1600us  [CUDA memcpy DtoH]
+                    0.00%  22.847us         4  5.7110us  5.6630us  5.8560us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+      API calls:   69.67%  1.90203s        12  158.50ms  25.153us  635.10ms  cudaMemcpyAsync
+                   23.05%  629.44ms         4  157.36ms  9.7090us  629.40ms  cudaLaunchKernelExC
+                    6.92%  188.93ms        44  4.2940ms  25.437us  9.0068ms  cudaMemcpy
+                    0.28%  7.7565ms      1152  6.7330us  3.5200us  938.70us  cudaLaunchKernel
+                    0.04%  1.1421ms        24  47.586us  9.0380us  74.966us  cudaMemset
+                    0.03%  875.47us       292  2.9980us  1.9020us  8.5970us  cudaMemsetAsync
+
+==3481340==       Range "encoder_backward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  15.253ms         4  3.8133ms  3.0662ms  5.1810ms  encoder_backward
+ GPU activities:   52.51%  430.71us         4  107.68us  105.02us  112.19us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                   35.21%  288.79us         4  72.198us  71.263us  72.991us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                   12.28%  100.77us         8  12.595us  10.496us  14.144us  [CUDA memcpy HtoD]
+      API calls:   76.42%  393.39us         8  49.173us  25.153us  98.187us  cudaMemcpyAsync
+                   23.58%  121.36us         8  15.169us  5.3260us  26.387us  cudaLaunchKernel
+
+==3481340==       Range "encoder_forward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  5.0381ms        24  209.92us  11.575us  4.5772ms  encoder_forward
+ GPU activities:  100.00%  3.1406ms        24  130.86us  127.49us  144.96us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+      API calls:  100.00%  4.9724ms        24  207.18us  10.040us  4.5697ms  cudaLaunchKernel
+
+==3481340==       Range "fused_classifier"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  1.5474ms        24  64.476us  20.516us  944.13us  fused_classifier
+ GPU activities:  100.00%  215.34ms        24  8.9725ms  8.9455ms  8.9910ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+      API calls:  100.00%  1.4374ms        24  59.891us  16.823us  938.70us  cudaLaunchKernel
+
+==3481340==       Range "gelu_backward_inplace"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  291.11us        48  6.0640us  4.4290us  10.788us  gelu_backward_inplace
+ GPU activities:  100.00%  28.634ms        48  596.55us  594.49us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+      API calls:  100.00%  245.28us        48  5.1100us  3.7040us  9.2340us  cudaLaunchKernel
+
+==3481340==       Range "gelu_forward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  1.9370ms       336  5.7640us  4.1830us  26.848us  gelu_forward
+ GPU activities:  100.00%  134.04ms       336  398.93us  395.61us  408.22us  gelu_forward_kernel2(float*, float const *)
+      API calls:  100.00%  1.6463ms       336  4.8990us  3.4850us  25.706us  cudaLaunchKernel
+
+==3481340==       Range "gpt2_backward_and_reduce"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  2.56953s         4  642.38ms  638.59ms  647.07ms  gpt2_backward_and_reduce
+ GPU activities:   38.64%  991.68ms       196  5.0596ms  1.1041ms  86.456ms  volta_sgemm_128x64_nn
+                   25.36%  650.72ms       192  3.3891ms  1.0599ms  5.2991ms  volta_sgemm_128x64_nt
+                   18.69%  479.66ms       100  4.7966ms  1.4785ms  82.976ms  volta_sgemm_64x64_nt
+                    3.82%  98.117ms        48  2.0441ms  1.9177ms  2.2833ms  volta_sgemm_128x64_tn
+                    3.60%  92.393ms        48  1.9249ms  1.8323ms  2.0093ms  volta_sgemm_64x64_nn
+                    3.15%  80.808ms        48  1.6835ms  1.6796ms  1.6943ms  softmax_autoregressive_backward_inplace_kernel(float*, float const *, int, int, int, float)
+                    1.40%  35.906ms         4  8.9765ms  8.9732ms  8.9787ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    1.25%  32.102ms       100  321.02us  315.03us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    1.12%  28.634ms        48  596.55us  594.49us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    0.94%  24.085ms       192  125.44us  60.286us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.75%  19.196ms        48  399.93us  397.21us  405.02us  gelu_forward_kernel2(float*, float const *)
+                    0.61%  15.551ms        48  323.98us  320.86us  328.79us  permute_kernel_backward(float*, float const *, float const *, float const *, int, int, int, int)
+                    0.36%  9.1626ms       304  30.140us     640ns  2.1356ms  [CUDA memset]
+                    0.28%  7.2520ms        48  151.08us  143.42us  162.88us  unpermute_kernel_backward(float*, float const *, int, int, int, int)
+                    0.02%  430.71us         4  107.68us  105.02us  112.19us  void wte_backward_kernel<int=256>(float*, int4 const *, int const *, float const *, int const *, unsigned int, int, int, int)
+                    0.01%  288.79us         4  72.198us  71.263us  72.991us  wpe_backward_kernel(float*, float const *, int const *, int, int, int, unsigned int)
+                    0.00%  113.34us        12  9.4450us  2.7840us  14.144us  [CUDA memcpy HtoD]
+                    0.00%  67.776us         4  16.944us  16.224us  17.824us  ncclKernel_SendRecv_RING_SIMPLE_Sum_int8_t(ncclDevComm*, unsigned long, ncclWork*)
+                    0.00%  22.847us         4  5.7110us  5.6630us  5.8560us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+                    0.00%  7.8410us         4  1.9600us  1.5690us  2.6560us  [CUDA memcpy DtoH]
+      API calls:   74.63%  1.90203s        12  158.50ms  25.153us  635.10ms  cudaMemcpyAsync
+                   24.70%  629.44ms         4  157.36ms  9.7090us  629.40ms  cudaLaunchKernelExC
+                    0.34%  8.5973ms         4  2.1493ms  2.1472ms  2.1526ms  cudaMemcpy
+                    0.29%  7.3120ms      1132  6.4590us  3.5200us  938.70us  cudaLaunchKernel
+                    0.04%  1.1148ms       300  3.7150us  1.9020us  55.569us  cudaMemsetAsync
+                    0.00%  53.886us         4  13.471us  9.0380us  23.682us  cudaMemset
+
+==3481340==       Range "gpt2_calculate_grad_norm"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  10.948ms         4  2.7369ms  2.6049ms  3.1166ms  gpt2_calculate_grad_norm
+ GPU activities:   99.76%  10.636ms         4  2.6590ms  2.5229ms  3.0589ms  void global_norm_squared_kernel<float>(float*, float const *, unsigned long, long)
+                    0.15%  15.871us         4  3.9670us  3.8720us  4.0320us  void global_sum_single_block_kernel<float>(float*, float const *, unsigned long)
+                    0.06%  6.7520us         4  1.6880us  1.5680us  2.0160us  [CUDA memcpy DtoH]
+                    0.03%  2.8150us         4     703ns     703ns     704ns  [CUDA memset]
+      API calls:   97.66%  10.662ms         4  2.6655ms  2.5272ms  3.0675ms  cudaMemcpy
+                    1.51%  165.32us         8  20.665us  8.7740us  37.168us  cudaLaunchKernel
+                    0.83%  90.479us         4  22.619us  11.722us  26.516us  cudaMemsetAsync
+
+==3481340==       Range "gpt2_forward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  8.34307s        24  347.63ms  327.31ms  406.99ms  gpt2_forward
+ GPU activities:   58.00%  4.81248s      1152  4.1775ms  1.5878ms  7.2775ms  volta_sgemm_128x64_tn
+                   26.78%  2.22244s       312  7.1232ms  949.17us  89.042ms  volta_sgemm_128x128_tn
+                    6.74%  558.87ms       288  1.9405ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                    3.93%  326.45ms       288  1.1335ms  1.1100ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    1.49%  123.52ms       576  214.45us  208.09us  221.73us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.38%  114.85ms       288  398.77us  395.61us  408.22us  gelu_forward_kernel2(float*, float const *)
+                    1.18%  97.629ms       288  338.99us  334.65us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.43%  35.541ms       288  123.41us  103.26us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.04%  3.1406ms        24  130.86us  127.49us  144.96us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.03%  2.5099ms        24  104.58us  101.79us  124.45us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.00%  410.46us       288  1.4250us     767ns  2.0160us  [CUDA memset]
+                    0.00%  76.417us        24  3.1840us  2.7840us  3.7440us  [CUDA memcpy HtoD]
+      API calls:   49.20%  22.438ms      3528  6.3590us  3.4850us  4.5697ms  cudaLaunchKernel
+                   48.23%  21.997ms        24  916.53us  13.389us  21.509ms  cudaMemcpy
+                    2.57%  1.1742ms       288  4.0770us  2.4050us  28.050us  cudaMemsetAsync
+
+==3481340==       Range "gpt2_update"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  72.464ms         4  18.116ms  15.958ms  24.520ms  gpt2_update
+ GPU activities:   88.27%  63.776ms        64  996.50us  2.8150us  4.9316ms  void adamw_kernel3<float, float>(float*, float*, float*, float*, float*, unsigned long, long, long, long, float, float, float, float, float, float, float, float, unsigned int)
+                    5.89%  4.2539ms         2  2.1269ms  2.1243ms  2.1295ms  [CUDA memset]
+                    5.84%  4.2179ms        16  263.62us  2.3360us  1.3442ms  void copy_and_cast_kernel<float, float>(float*, float const *, unsigned long, long, long)
+      API calls:   95.58%  471.77us        80  5.8970us  3.4520us  30.137us  cudaLaunchKernel
+                    4.42%  21.809us         2  10.904us  5.7490us  16.060us  cudaMemset
+
+==3481340==       Range "layernorm_backward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  923.02us       100  9.2300us  6.2950us  17.459us  layernorm_backward
+ GPU activities:   99.62%  32.102ms       100  321.02us  315.03us  326.30us  layernorm_backward_kernel10(float*, float*, float*, float*, float const *, float const *, float const *, float const *, float const *, int, int, int)
+                    0.38%  121.29us       100  1.2120us     640ns  1.8560us  [CUDA memset]
+      API calls:   65.58%  525.51us       100  5.2550us  3.5200us  11.171us  cudaLaunchKernel
+                   34.42%  275.87us       100  2.7580us  1.9020us  6.1620us  cudaMemsetAsync
+
+==3481340==       Range "layernorm_forward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  407.17us        24  16.965us  12.678us  40.354us  layernorm_forward
+ GPU activities:  100.00%  2.5099ms        24  104.58us  101.79us  124.45us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+      API calls:  100.00%  263.28us        24  10.969us  7.3220us  33.225us  cudaLaunchKernel
+
+==3481340==       Range "matmul_backward"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  7.9541ms       196  40.581us  25.925us  168.34us  matmul_backward
+ GPU activities:   48.99%  991.68ms       196  5.0596ms  1.1041ms  86.456ms  volta_sgemm_128x64_nn
+                   32.15%  650.72ms       192  3.3891ms  1.0599ms  5.2991ms  volta_sgemm_128x64_nt
+                   16.25%  328.86ms         4  82.216ms  80.895ms  82.976ms  volta_sgemm_64x64_nt
+                    1.41%  28.634ms        48  596.55us  594.49us  599.22us  gelu_backward_inplace_kernel(float*, float const *)
+                    1.19%  24.085ms       192  125.44us  60.286us  225.15us  void matmul_backward_bias_kernel9<float, bool=1>(float*, float const *, int, int, int, std::integral_constant<bool, bool=1>)
+                    0.01%  270.44us       192  1.4080us     704ns  2.2410us  [CUDA memset]
+      API calls:   85.39%  3.5037ms       632  5.5430us  3.5280us  85.630us  cudaLaunchKernel
+                   14.61%  599.60us       192  3.1220us  2.2420us  8.5970us  cudaMemsetAsync
+
+==3481340==       Range "matmul_cublaslt"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  45.225ms      2336  19.360us  7.8570us  12.489ms  matmul_cublaslt
+ GPU activities:   49.57%  4.91060s      1200  4.0922ms  1.5878ms  7.2775ms  volta_sgemm_128x64_tn
+                   22.43%  2.22244s       312  7.1232ms  949.17us  89.042ms  volta_sgemm_128x128_tn
+                   10.01%  991.68ms       196  5.0596ms  1.1041ms  86.456ms  volta_sgemm_128x64_nn
+                    6.57%  651.26ms       336  1.9383ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                    6.57%  650.72ms       192  3.3891ms  1.0599ms  5.2991ms  volta_sgemm_128x64_nt
+                    4.84%  479.66ms       100  4.7966ms  1.4785ms  82.976ms  volta_sgemm_64x64_nt
+                    0.01%  680.90us       480  1.4180us     704ns  2.2410us  [CUDA memset]
+      API calls:   87.28%  12.170ms      2336  5.2090us  3.6380us  188.46us  cudaLaunchKernel
+                   12.72%  1.7738ms       480  3.6950us  2.2420us  28.050us  cudaMemsetAsync
+
+==3481340==       Range "validation"
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+          Range:  100.00%  7.14008s         1  7.14008s  7.14008s  7.14008s  validation
+ GPU activities:   56.50%  4.00697s       960  4.1739ms  1.8012ms  7.2775ms  volta_sgemm_128x64_tn
+                   26.13%  1.85300s       260  7.1269ms  1.0687ms  89.042ms  volta_sgemm_128x128_tn
+                    6.57%  465.82ms       240  1.9409ms  1.7645ms  2.4949ms  volta_sgemm_64x64_nn
+                    3.84%  272.10ms       240  1.1337ms  1.1149ms  1.1683ms  softmax_forward_kernel5(float*, float, float const *, int, int)
+                    2.53%  179.43ms        20  8.9717ms  8.9455ms  8.9910ms  void fused_classifier_kernel5<bool=1, bool=0>(float*, float*, float*, float, int const *, int, int, int, int, std::integral_constant<bool, bool=1>)
+                    1.45%  102.92ms       480  214.43us  208.09us  221.50us  fused_residual_forward_kernel5(float*, float*, float*, float*, float const *, float const *, float const *, float const *, int, int)
+                    1.35%  95.709ms       240  398.79us  395.61us  408.22us  gelu_forward_kernel2(float*, float const *)
+                    1.15%  81.350ms       240  338.96us  334.65us  356.22us  permute_kernel(float*, float*, float*, float const *, int, int, int, int)
+                    0.42%  29.583ms       240  123.26us  107.36us  164.25us  unpermute_kernel(float*, float*, int, int, int, int)
+                    0.04%  2.6176ms        20  130.88us  127.49us  144.96us  encoder_forward_kernel3(float*, int const *, float const *, float const *, int, int, int)
+                    0.03%  2.0951ms        20  104.76us  101.79us  124.45us  layernorm_forward_kernel6(float*, float*, float*, float const *, float const *, float const *, int, int)
+                    0.01%  392.77us       260  1.5100us     767ns  2.7520us  [CUDA memset]
+                    0.00%  124.09us        40  3.1020us  2.7840us  3.7440us  [CUDA memcpy HtoD]
+                    0.00%  57.342us        20  2.8670us  2.6880us  4.1600us  [CUDA memcpy DtoH]
+      API calls:   90.25%  202.20ms        60  3.3700ms  13.389us  21.509ms  cudaMemcpy
+                    8.83%  19.777ms      2960  6.6810us  3.4850us  4.5697ms  cudaLaunchKernel
+                    0.49%  1.0882ms        20  54.409us  47.055us  74.966us  cudaMemset
+                    0.44%  974.96us       240  4.0620us  2.4050us  28.050us  cudaMemsetAsync
+

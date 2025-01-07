@@ -393,7 +393,7 @@ def write_fp16(tensor, file):
 def write_bf16(tensor, file):
     t = tensor.detach().cpu().to(torch.bfloat16)
     # numpy doesn't have bf16 datatype so we have to trick it
-    t = t.view(torch.int16) # trick: reinterpret as int16
+    t = t.view(torch.int16)
     b = t.numpy().tobytes()
     file.write(b)
 

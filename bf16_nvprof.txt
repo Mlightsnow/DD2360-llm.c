@@ -1,0 +1,180 @@
++-----------------------+----------------------------------------------------+
+| Parameter             | Value                                              |
++-----------------------+----------------------------------------------------+
+| train data pattern    | dev/data/tinyshakespeare/tiny_shakespeare_train.bin |
+| val data pattern      | dev/data/tinyshakespeare/tiny_shakespeare_val.bin  |
+| output log dir        | NULL                                               |
+| checkpoint_every      | 0                                                  |
+| resume                | 0                                                  |
+| micro batch size B    | 4                                                  |
+| sequence length T     | 1024                                               |
+| total batch size      | 4096                                               |
+| LR scheduler          | cosine                                             |
+| learning rate (LR)    | 3.000000e-04                                       |
+| warmup iterations     | 0                                                  |
+| final LR fraction     | 1.000000e+00                                       |
+| weight decay          | 0.000000e+00                                       |
+| skip update lossz     | 0.000000                                           |
+| skip update gradz     | 0.000000                                           |
+| max_steps             | -1                                                 |
+| val_loss_every        | 20                                                 |
+| val_max_steps         | 20                                                 |
+| sample_every          | 20                                                 |
+| genT                  | 64                                                 |
+| overfit_single_batch  | 0                                                  |
+| use_master_weights    | enabled                                            |
+| gelu_fusion           | 0                                                  |
+| recompute             | 1                                                  |
++-----------------------+----------------------------------------------------+
+| device                | Tesla T4                                           |
+| peak TFlops           | -1.0                                               |
+| precision             | BF16                                               |
++-----------------------+----------------------------------------------------+
+12
+| weight init method    | gpt2_124M_bf16.bin                                 |
+| max_sequence_length T | 1024                                               |
+| vocab_size V          | 50257                                              |
+| padded_vocab_size Vp  | 50304                                              |
+| num_layers L          | 12                                                 |
+| num_heads NH          | 12                                                 |
+| channels C            | 768                                                |
+| num_parameters        | 124475904                                          |
++-----------------------+----------------------------------------------------+
+| train_num_batches     | 74                                                 |
+| val_num_batches       | 20                                                 |
++-----------------------+----------------------------------------------------+
+| run hellaswag         | no                                                 |
++-----------------------+----------------------------------------------------+
+| Zero Optimization is disabled                                              |
+| num_processes         | 1                                                  |
+| zero_stage            | 0                                                  |
++-----------------------+----------------------------------------------------+
+num_parameters: 124475904 => bytes: 248951808
+allocated 237 MiB for model parameters
+batch_size B=4 * seq_len T=1024 * num_processes=1 and total_batch_size=4096
+=> setting grad_accum_steps=1
+allocating 237 MiB for parameter gradients
+allocating 2475 MiB for activations
+allocating 474 MiB for AdamW optimizer state m
+allocating 474 MiB for AdamW optimizer state v
+allocating 474 MiB for master copy of params
+device memory usage: 12296 MiB / 14917 MiB
+memory per sequence: 618 MiB
+ -> estimated maximum batch size: 8
+val loss 4.505239
+step    1/74 | loss 4.286043 (+nanz)| norm 13.0181 (+nanz)| lr 3.00e-04 | 3357.07 ms | -100.0% bf16 MFU | 1220 tok/s
+step    2/74 | loss 4.821593 (+nanz)| norm 25.7229 (+nanz)| lr 3.00e-04 | 3334.56 ms | -100.0% bf16 MFU | 1228 tok/s
+step    3/74 | loss 4.401447 (+nanz)| norm 16.4965 (+nanz)| lr 3.00e-04 | 3304.08 ms | -100.0% bf16 MFU | 1234 tok/s
+step    4/74 | loss 3.605494 (+nanz)| norm 7.7854 (+nanz)| lr 3.00e-04 | 3310.05 ms | -100.0% bf16 MFU | 1235 tok/s
+step    5/74 | loss 3.658537 (+nanz)| norm 5.0581 (+nanz)| lr 3.00e-04 | 3305.71 ms | -100.0% bf16 MFU | 1236 tok/s
+step    6/74 | loss 3.918748 (+nanz)| norm 4.9926 (+nanz)| lr 3.00e-04 | 3287.76 ms | -100.0% bf16 MFU | 1238 tok/s
+step    7/74 | loss 4.039216 (+nanz)| norm 5.1074 (+nanz)| lr 3.00e-04 | 3288.45 ms | -100.0% bf16 MFU | 1240 tok/s
+step    8/74 | loss 3.565495 (+nanz)| norm 5.9221 (+nanz)| lr 3.00e-04 | 3160.24 ms | -100.0% bf16 MFU | 1249 tok/s
+step    9/74 | loss 3.898657 (+nanz)| norm 4.4535 (+nanz)| lr 3.00e-04 | 3269.74 ms | -100.0% bf16 MFU | 1250 tok/s
+step   10/74 | loss 3.503328 (+nanz)| norm 4.0886 (+nanz)| lr 3.00e-04 | 3324.33 ms | -100.0% bf16 MFU | 1247 tok/s
+step   11/74 | loss 3.940156 (+nanz)| norm 3.5338 (+nanz)| lr 3.00e-04 | 3316.49 ms | -100.0% bf16 MFU | 1246 tok/s
+step   12/74 | loss 3.711920 (+nanz)| norm 3.2269 (+nanz)| lr 3.00e-04 | 3332.72 ms | -100.0% bf16 MFU | 1244 tok/s
+step   13/74 | loss 3.932954 (+nanz)| norm 2.9105 (+nanz)| lr 3.00e-04 | 3320.43 ms | -100.0% bf16 MFU | 1243 tok/s
+step   14/74 | loss 3.794141 (+nanz)| norm 3.5165 (+nanz)| lr 3.00e-04 | 3381.11 ms | -100.0% bf16 MFU | 1239 tok/s
+step   15/74 | loss 3.637239 (+nanz)| norm 2.4385 (+nanz)| lr 3.00e-04 | 3348.60 ms | -100.0% bf16 MFU | 1238 tok/s
+step   16/74 | loss 3.425113 (+nanz)| norm 2.3134 (+nanz)| lr 3.00e-04 | 3384.41 ms | -100.0% bf16 MFU | 1235 tok/s
+step   17/74 | loss 3.929191 (+nanz)| norm 3.5332 (+nanz)| lr 3.00e-04 | 3377.85 ms | -100.0% bf16 MFU | 1233 tok/s
+step   18/74 | loss 3.728754 (+nanz)| norm 2.5636 (+nanz)| lr 3.00e-04 | 3389.45 ms | -100.0% bf16 MFU | 1231 tok/s
+step   19/74 | loss 3.484288 (+nanz)| norm 2.2620 (+nanz)| lr 3.00e-04 | 3394.85 ms | -100.0% bf16 MFU | 1229 tok/s
+step   20/74 | loss 3.599751 (+nanz)| norm 1.9617 (+nanz)| lr 3.00e-04 | 3374.37 ms | -100.0% bf16 MFU | 1228 tok/s
+val loss 3.669823
+generating:
+---
+O, but unto seven more: to those whose strength are loose:
+And to those who fought with the crown?
+That some curious things should be wrought,
+That will, and say and shake some leaving conduct.
+
+<|endoftext|>Nor Can an officer officer? attest his sovereign not!
+Which office wherein he
+---
+step   21/74 | loss 3.821482 (+nanz)| norm 3.3707 (+nanz)| lr 3.00e-04 | 3325.42 ms | -100.0% bf16 MFU | 1228 tok/s
+step   22/74 | loss 3.701115 (+nanz)| norm 2.4682 (+nanz)| lr 3.00e-04 | 3329.61 ms | -100.0% bf16 MFU | 1228 tok/s
+step   23/74 | loss 3.218289 (+nanz)| norm 2.3264 (+nanz)| lr 3.00e-04 | 3329.30 ms | -100.0% bf16 MFU | 1228 tok/s
+step   24/74 | loss 3.436867 (+nanz)| norm 2.7527 (+nanz)| lr 3.00e-04 | 3365.18 ms | -100.0% bf16 MFU | 1228 tok/s
+step   25/74 | loss 3.803291 (+nanz)| norm 3.0306 (+nanz)| lr 3.00e-04 | 3309.87 ms | -100.0% bf16 MFU | 1228 tok/s
+step   26/74 | loss 3.603018 (+nanz)| norm 2.9933 (+nanz)| lr 3.00e-04 | 3391.35 ms | -100.0% bf16 MFU | 1227 tok/s
+step   27/74 | loss 3.879372 (+nanz)| norm 2.5276 (+nanz)| lr 3.00e-04 | 3334.62 ms | -100.0% bf16 MFU | 1227 tok/s
+step   28/74 | loss 3.530342 (+nanz)| norm 2.9971 (+nanz)| lr 3.00e-04 | 3385.88 ms | -100.0% bf16 MFU | 1226 tok/s
+step   29/74 | loss 3.393635 (+nanz)| norm 2.4295 (+nanz)| lr 3.00e-04 | 3334.10 ms | -100.0% bf16 MFU | 1226 tok/s
+step   30/74 | loss 3.298234 (+nanz)| norm 2.0105 (+nanz)| lr 3.00e-04 | 3390.20 ms | -100.0% bf16 MFU | 1225 tok/s
+step   31/74 | loss 3.192484 (+nanz)| norm 1.8505 (+nanz)| lr 3.00e-04 | 3353.90 ms | -100.0% bf16 MFU | 1225 tok/s
+step   32/74 | loss 3.465233 (+nanz)| norm 1.8253 (+nanz)| lr 3.00e-04 | 3373.11 ms | -100.0% bf16 MFU | 1224 tok/s
+step   33/74 | loss 3.608312 (+nanz)| norm 1.7543 (+nanz)| lr 3.00e-04 | 3385.99 ms | -100.0% bf16 MFU | 1223 tok/s
+step   34/74 | loss 3.490263 (+nanz)| norm 1.8140 (+nanz)| lr 3.00e-04 | 3381.87 ms | -100.0% bf16 MFU | 1222 tok/s
+step   35/74 | loss 3.723467 (+nanz)| norm 1.9227 (+nanz)| lr 3.00e-04 | 3381.14 ms | -100.0% bf16 MFU | 1222 tok/s
+step   36/74 | loss 3.398776 (+nanz)| norm 2.2299 (+nanz)| lr 3.00e-04 | 3403.64 ms | -100.0% bf16 MFU | 1221 tok/s
+step   37/74 | loss 3.246587 (+nanz)| norm 1.8391 (+nanz)| lr 3.00e-04 | 3222.49 ms | -100.0% bf16 MFU | 1224 tok/s
+step   38/74 | loss 3.209101 (+nanz)| norm 1.9378 (+nanz)| lr 3.00e-04 | 3414.84 ms | -100.0% bf16 MFU | 1222 tok/s
+step   39/74 | loss 3.631349 (+nanz)| norm 2.1821 (+nanz)| lr 3.00e-04 | 3323.34 ms | -100.0% bf16 MFU | 1223 tok/s
+step   40/74 | loss 3.098598 (+nanz)| norm 1.8116 (+nanz)| lr 3.00e-04 | 3382.49 ms | -100.0% bf16 MFU | 1222 tok/s
+val loss 3.607424
+generating:
+---
+Nurse: What can I do?
+Why, what says they: we have brought you along:
+Why, I'll tell them; but, mum, I'll say, I'll tell them this:<|endoftext|>Nurse<|endoftext|>How did I say this? Austrianr: Mhivai's acquaintance
+
+---
+step   41/74 | loss 3.887288 (+nanz)| norm 2.2200 (+nanz)| lr 3.00e-04 | 3336.85 ms | -100.0% bf16 MFU | 1222 tok/s
+step   42/74 | loss 3.392344 (+nanz)| norm 1.5613 (+nanz)| lr 3.00e-04 | 3357.47 ms | -100.0% bf16 MFU | 1222 tok/s
+step   43/74 | loss 3.377795 (+nanz)| norm 1.4938 (+nanz)| lr 3.00e-04 | 3245.00 ms | -100.0% bf16 MFU | 1225 tok/s
+step   44/74 | loss 3.449825 (+nanz)| norm 1.5652 (+nanz)| lr 3.00e-04 | 1905.10 ms | -100.0% bf16 MFU | 1277 tok/s
+step   45/74 | loss 3.617514 (+nanz)| norm 1.5816 (+nanz)| lr 3.00e-04 | 1425.26 ms | -100.0% bf16 MFU | 1366 tok/s
+step   46/74 | loss 3.124856 (+nanz)| norm 1.3533 (+nanz)| lr 3.00e-04 | 1422.58 ms | -100.0% bf16 MFU | 1450 tok/s
+step   47/74 | loss 3.450637 (+nanz)| norm 1.4043 (+nanz)| lr 3.00e-04 | 1426.47 ms | -100.0% bf16 MFU | 1528 tok/s
+step   48/74 | loss 3.971891 (+nanz)| norm 1.6309 (+nanz)| lr 3.00e-04 | 1425.32 ms | -100.0% bf16 MFU | 1602 tok/s
+step   49/74 | loss 3.248527 (+nanz)| norm 1.4435 (+nanz)| lr 3.00e-04 | 1428.79 ms | -100.0% bf16 MFU | 1671 tok/s
+step   50/74 | loss 3.432526 (+nanz)| norm 1.7435 (+nanz)| lr 3.00e-04 | 1428.93 ms | -100.0% bf16 MFU | 1736 tok/s
+step   51/74 | loss 3.770886 (+nanz)| norm 1.4027 (+nanz)| lr 3.00e-04 | 1428.47 ms | -100.0% bf16 MFU | 1798 tok/s
+step   52/74 | loss 3.757030 (+nanz)| norm 1.4001 (+nanz)| lr 3.00e-04 | 1431.02 ms | -100.0% bf16 MFU | 1855 tok/s
+step   53/74 | loss 3.425956 (+nanz)| norm 1.6009 (+nanz)| lr 3.00e-04 | 1430.96 ms | -100.0% bf16 MFU | 1909 tok/s
+step   54/74 | loss 3.411779 (+nanz)| norm 1.2330 (+nanz)| lr 3.00e-04 | 1425.41 ms | -100.0% bf16 MFU | 1961 tok/s
+step   55/74 | loss 3.291109 (+nanz)| norm 1.7350 (+nanz)| lr 3.00e-04 | 1424.73 ms | -100.0% bf16 MFU | 2010 tok/s
+step   56/74 | loss 3.275049 (+nanz)| norm 1.4261 (+nanz)| lr 3.00e-04 | 1427.31 ms | -100.0% bf16 MFU | 2055 tok/s
+step   57/74 | loss 3.034638 (+nanz)| norm 1.4567 (+nanz)| lr 3.00e-04 | 1428.64 ms | -100.0% bf16 MFU | 2098 tok/s
+step   58/74 | loss 3.494905 (+nanz)| norm 1.3398 (+nanz)| lr 3.00e-04 | 1429.42 ms | -100.0% bf16 MFU | 2139 tok/s
+step   59/74 | loss 3.326069 (+nanz)| norm 1.7881 (+nanz)| lr 3.00e-04 | 1427.66 ms | -100.0% bf16 MFU | 2177 tok/s
+step   60/74 | loss 3.541605 (+nanz)| norm 1.5690 (+nanz)| lr 3.00e-04 | 1431.60 ms | -100.0% bf16 MFU | 2213 tok/s
+val loss 3.510090
+generating:
+---
+Tut, sir, it is your hope and care to banish it.
+Take it upon me, sir, to prevent it for he should
+continue. I must not, for this country may further learn it,
+though this cause be well restricted. Hector's hunt is:
+God sentence thee to
+---
+step   61/74 | loss 3.215655 (+nanz)| norm 1.2084 (+nanz)| lr 3.00e-04 | 1437.47 ms | -100.0% bf16 MFU | 2247 tok/s
+step   62/74 | loss 3.467283 (+nanz)| norm 1.3540 (+nanz)| lr 3.00e-04 | 1433.44 ms | -100.0% bf16 MFU | 2279 tok/s
+step   63/74 | loss 3.397947 (+nanz)| norm 1.5497 (+nanz)| lr 3.00e-04 | 1438.45 ms | -100.0% bf16 MFU | 2308 tok/s
+step   64/74 | loss 3.439439 (+nanz)| norm 1.3678 (+nanz)| lr 3.00e-04 | 1434.73 ms | -100.0% bf16 MFU | 2337 tok/s
+step   65/74 | loss 3.624555 (+nanz)| norm 1.6981 (+nanz)| lr 3.00e-04 | 1432.29 ms | -100.0% bf16 MFU | 2364 tok/s
+step   66/74 | loss 3.041833 (+nanz)| norm 1.2383 (+nanz)| lr 3.00e-04 | 1440.27 ms | -100.0% bf16 MFU | 2389 tok/s
+step   67/74 | loss 3.308543 (+nanz)| norm 1.1844 (+nanz)| lr 3.00e-04 | 1428.67 ms | -100.0% bf16 MFU | 2413 tok/s
+step   68/74 | loss 3.687137 (+nanz)| norm 1.4399 (+nanz)| lr 3.00e-04 | 1432.04 ms | -100.0% bf16 MFU | 2437 tok/s
+step   69/74 | loss 3.315840 (+nanz)| norm 1.2747 (+nanz)| lr 3.00e-04 | 1431.08 ms | -100.0% bf16 MFU | 2459 tok/s
+step   70/74 | loss 3.661576 (+nanz)| norm 1.2987 (+nanz)| lr 3.00e-04 | 1432.20 ms | -100.0% bf16 MFU | 2479 tok/s
+step   71/74 | loss 3.615893 (+nanz)| norm 1.1645 (+nanz)| lr 3.00e-04 | 1434.59 ms | -100.0% bf16 MFU | 2499 tok/s
+step   72/74 | loss 3.750371 (+nanz)| norm 1.2221 (+nanz)| lr 3.00e-04 | 1440.31 ms | -100.0% bf16 MFU | 2516 tok/s
+step   73/74 | loss 3.839222 (+nanz)| norm 1.2501 (+nanz)| lr 3.00e-04 | 1435.09 ms | -100.0% bf16 MFU | 2534 tok/s
+step   74/74 | loss 3.382901 (+nanz)| norm 1.2877 (+nanz)| lr 3.00e-04 | 1435.00 ms | -100.0% bf16 MFU | 2550 tok/s
+val loss 3.505288
+generating:
+---
+Loud
+Sounders:
+What it may be, hear it,
+The villain to rough it!
+
+<|endoftext|>BAPTISTA:<|endoftext|>CORDINEL:<|endoftext|>DUKE VINCENTIO:
+You must look to it
+In sincerity of judgment.
+But tell me kiss and
+---
+total average iteration time: 2535.563892 ms
