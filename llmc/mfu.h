@@ -44,7 +44,7 @@ static const PerfData AMPERE_DATACENTER = {156.f, 312.f, 312.f, 312.f, -1.f, -1.
 static const PerfData AMPERE_CONSUMER = {40.f, 80.f, 80.f, 160.f, -1.f, -1.f, 1860.f, 336.f};
 static const PerfData HOPPER = {378.f, 756.f, 756.f, 756.f, 1513.f, 1513.f, 1620.f, 456.f};
 static const PerfData ADA = {82.6f, 165.2f, 165.2f, 330.3f, 330.3f, 660.6f, 2520.f, 512.f};
-static const PerfData TURING = {8.1f, -1.f, 65.f, -1.f, 130.f, -1.f, 1590.f, 320.f}; // T4 does not natively support BF16
+static const PerfData TURING = {8.1f, -1.f, 65.f, 65.f, -1.f, -1.f, 1590.f, 320.f}; // T4 does not natively support BF16
 static const PerfData Ada_Lovelace = {120.f, 242.f, 242.f, 242.f, 485.f, 485.f, 2040.f, 512.f};
 
 typedef struct {
@@ -210,7 +210,7 @@ GPUUtilInfo get_gpu_utilization_info() {
     unsigned long long throttle;
     nvmlCheck(nvmlDeviceGetCurrentClocksThrottleReasons(device, &throttle));
     info.throttle_reason = get_throttle_reason(throttle);
-    nvmlCheck(nvmlDeviceGetFanSpeed(device, &info.fan));
+    // nvmlCheck(nvmlDeviceGetFanSpeed(device, &info.fan));
 
     // for "utilization", we look at recorded samples. In principle, we could query the driver for how many samples
     // to request, but then we'd need to dynamically allocate sufficient space. Let's just hard-code a limit of 128,

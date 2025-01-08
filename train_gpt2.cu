@@ -1437,7 +1437,7 @@ int main(int argc, char *argv[]) {
     int T = 1024; // sequence length max
     int total_batch_size = -1; // will be calculated down below later, if not provided
     float learning_rate = 3e-4f;
-    int log_gpu_every = -1;
+    int log_gpu_every = 1;
     int warmup_iterations = 0;
     float final_learning_rate_frac = 1.0f; // final fraction of learning rate, at end of training
     float weight_decay = 0.0f;
@@ -1714,6 +1714,13 @@ int main(int argc, char *argv[]) {
     cudaCheck(cudaEventCreate(&end));
     cudaCheck(cudaProfilerStart());
     double total_sum_iteration_time_s = 0.0;
+    double total_loss = 0.0;
+    double total_norm= 0.0;
+    double total_MFU = 0.0;
+    double total_tokens_s = 0.0;
+    double total_memory = 0.0;
+    double total_gpu_util = 0.0;
+    int step_gpu_log = 0;
     float ema_tokens_per_second = 0.0f;
     for (; step <= train_num_batches; step++) {
         NvtxRange step_range("Train step", step);
@@ -1878,11 +1885,19 @@ int main(int argc, char *argv[]) {
         printf0("step %4d/%d | loss %7.6f (%+.2fz)| norm %6.4f (%+.2fz)| lr %.2e | %.2f ms | %.1f%% %s MFU | %.0f tok/s\n",
                 step + 1, train_num_batches, model.mean_loss, zloss, grad_norm, zgrad, step_learning_rate,
                 time_elapsed_ms, 100*mfu, precision_str, bias_corrected_ema_tokens_per_second);
+        
+        total_loss += model.mean_loss;
+        total_norm += grad_norm;
+        total_MFU += mfu;
+        total_tokens_s += bias_corrected_ema_tokens_per_second;
         if(log_gpu_every > 0 && (step + 1) % log_gpu_every == 0) {
             GPUUtilInfo gpu_info = get_gpu_utilization_info();
             printf0("                  compute %2.1f%% | memory: %2.1f%% | fan: %2d%% | %4d MHz / %4d MHz | %3d W / %3d W | %d°C / %d°C | %s\n",
                     gpu_info.gpu_utilization, gpu_info.mem_utilization, gpu_info.fan, gpu_info.clock, gpu_info.max_clock, gpu_info.power / 1000, gpu_info.power_limit / 1000,
                     gpu_info.temperature, gpu_info.temp_slowdown, gpu_info.throttle_reason);
+            step_gpu_log++;
+            total_memory += gpu_info.mem_utilization;
+            total_gpu_util += gpu_info.gpu_utilization;
         }
         logger_log_train(&logger, step, model.mean_loss, step_learning_rate, grad_norm);
 
@@ -1891,9 +1906,16 @@ int main(int argc, char *argv[]) {
     }
     // add a total average, for optimizations that are only mild improvements (excluding 1st batch as warmup)
     printf0("total average iteration time: %f ms\n", total_sum_iteration_time_s / (train_num_batches-1) * 1000);
-
+    printf0("total average loss: %f\n", total_loss / train_num_batches);
+    printf0("total average norm: %f\n", total_norm / train_num_batches);
+    printf0("total average MFU: %f\n", total_MFU / train_num_batches);
+    printf0("total average tokens/s: %f\n", total_tokens_s / train_num_batches);
+    if (log_gpu_every > 0) {
+    printf0("total average memory: %f\n", total_memory / step_gpu_log);
+    printf0("total average GPU util: %f\n", total_gpu_util / step_gpu_log);
+    }
     // free and destroy everything
-    cudaCheck(cudaEventDestroy(end));
+    cudaCheck(cudaEventDestroy(end));   
     cudaCheck(cudaEventDestroy(start));
     if (run_hellaswag) { evalloader_free(&eval_loader); }
     dataloader_free(&train_loader);
