@@ -44,6 +44,8 @@ static const PerfData AMPERE_DATACENTER = {156.f, 312.f, 312.f, 312.f, -1.f, -1.
 static const PerfData AMPERE_CONSUMER = {40.f, 80.f, 80.f, 160.f, -1.f, -1.f, 1860.f, 336.f};
 static const PerfData HOPPER = {378.f, 756.f, 756.f, 756.f, 1513.f, 1513.f, 1620.f, 456.f};
 static const PerfData ADA = {82.6f, 165.2f, 165.2f, 330.3f, 330.3f, 660.6f, 2520.f, 512.f};
+static const PerfData TURING = {8.1f, -1.f, 65.f, -1.f, 130.f, -1.f, 1590.f, 320.f}; // T4 does not natively support BF16
+static const PerfData Ada_Lovelace = {120.f, 242.f, 242.f, 242.f, 485.f, 485.f, 2040.f, 512.f};
 
 typedef struct {
     const char* name;
@@ -92,6 +94,8 @@ static GPUEntry gpu_db[] = {
     {"NVIDIA GeForce RTX 4060", &ADA, 96, 2460},
     {"NVIDIA H100 PCIe", &HOPPER, 456, 1620},
     {"NVIDIA H100 80GB HBM3", &HOPPER, 528, 1830}, // HBM3 = SXM5
+    {"Tesla T4", &TURING, 320, 1590},
+    {"NVIDIA L4", &Ada_Lovelace, 512, 2040}
 };
 
 float get_flops_promised(const char* device, int precision_mode) {
@@ -115,7 +119,7 @@ float get_flops_promised(const char* device, int precision_mode) {
     https://resources.nvidia.com/en-us-tensor-core
     https://images.nvidia.com/aem-dam/Solutions/geforce/ada/nvidia-ada-gpu-architecture.pdf
     */
-
+//    printf("device: %s\n", device);
    // validate the precision mode as one of the three possible values
     if (!(precision_mode == MFUH_PRECISION_FP32 || precision_mode == MFUH_PRECISION_FP16 || precision_mode == MFUH_PRECISION_BF16)) {
         fprintf(stderr, "Invalid precision mode: %d\n", precision_mode);
